@@ -16,14 +16,17 @@ const GameBoard = () => {
   const [isCorrectMatch, setIsCorrectMatch] = useState(false);
   const [matchedItems, setMatchedItems] = useState<Set<string>>(new Set());
   
-  // Reset matched items and random order when starting a new game
+  // Reset matched items and random orders when starting a new game
   React.useEffect(() => {
     if (currentLevel === 0) {
       setMatchedItems(new Set());
-      // Generate new random order for new game
-      const shuffled = [...Array(gameData.animals.length)].map((_, i) => i)
+      // Generate new random order for draggable items
+      const shuffledItems = [...Array(gameData.animals.length)].map((_, i) => i)
         .sort(() => Math.random() - 0.5);
-      setRandomOrder(shuffled);
+      setRandomOrder(shuffledItems);
+      // Generate new random order for shadow positions
+      const shuffledShadows = [...gameData.animals].sort(() => Math.random() - 0.5);
+      setShadowOrder(shuffledShadows);
     }
   }, [currentLevel]);
 
@@ -43,8 +46,18 @@ const GameBoard = () => {
   const currentItemIndex = randomOrder[currentLevel % gameData.animals.length] ?? 0;
   const currentItem = gameData.animals[currentItemIndex];
   
-  // All 10 shadows are always displayed
-  const shadowTargets = gameData.animals;
+  // Randomize shadow positions on the grid
+  const [shadowOrder, setShadowOrder] = useState<GameItem[]>([]);
+  
+  // Initialize randomized shadow order when component mounts
+  React.useEffect(() => {
+    if (shadowOrder.length === 0) {
+      const shuffled = [...gameData.animals].sort(() => Math.random() - 0.5);
+      setShadowOrder(shuffled);
+    }
+  }, [shadowOrder.length]);
+  
+  const shadowTargets = shadowOrder;
 
   const handleDragStart = (itemId: string) => {
     setDraggedItem(itemId);
