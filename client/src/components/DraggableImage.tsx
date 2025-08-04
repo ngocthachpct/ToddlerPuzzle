@@ -41,26 +41,70 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     e.preventDefault();
   };
 
+  const calculateOverlapPercentage = (draggedRect: DOMRect, targetRect: DOMRect): number => {
+    // Calculate intersection area
+    const left = Math.max(draggedRect.left, targetRect.left);
+    const right = Math.min(draggedRect.right, targetRect.right);
+    const top = Math.max(draggedRect.top, targetRect.top);
+    const bottom = Math.min(draggedRect.bottom, targetRect.bottom);
+    
+    // No overlap if any dimension is negative
+    if (left >= right || top >= bottom) return 0;
+    
+    const intersectionArea = (right - left) * (bottom - top);
+    const targetArea = targetRect.width * targetRect.height;
+    
+    return (intersectionArea / targetArea) * 100;
+  };
+
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!isDragging) return;
 
     const touch = e.changedTouches[0];
-    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
     
-    // Check if dropped on a shadow target
-    const shadowTarget = elementBelow?.closest('[data-shadow-target]');
-    if (shadowTarget) {
-      const targetId = shadowTarget.getAttribute('data-target-id');
-      if (targetId) {
-        // Import the handleDrop function from parent
-        const event = new CustomEvent('dragDrop', {
-          detail: {
+    // Get the dragged item's current position and size
+    const draggedElement = dragRef.current;
+    if (!draggedElement) {
+      setPosition({ x: 0, y: 0 });
+      setIsDragging(false);
+      onDragEnd();
+      return;
+    }
+    
+    const draggedRect = draggedElement.getBoundingClientRect();
+    
+    // Find all shadow targets and check overlap percentage
+    const shadowTargets = document.querySelectorAll('[data-shadow-target="true"]');
+    let bestMatch: { targetId: string; overlapPercentage: number; position: { x: number; y: number } } | null = null;
+    
+    shadowTargets.forEach(shadowTarget => {
+      const targetRect = shadowTarget.getBoundingClientRect();
+      const overlapPercentage = calculateOverlapPercentage(draggedRect, targetRect);
+      
+      if (overlapPercentage >= 70) {
+        const targetId = shadowTarget.getAttribute('data-target-id');
+        if (targetId && (!bestMatch || overlapPercentage > bestMatch.overlapPercentage)) {
+          bestMatch = {
             targetId,
-            position: { x: touch.clientX, y: touch.clientY }
-          }
-        });
-        window.dispatchEvent(event);
+            overlapPercentage,
+            position: {
+              x: targetRect.left + targetRect.width / 2,
+              y: targetRect.top + targetRect.height / 2
+            }
+          };
+        }
       }
+    });
+    
+    // Trigger drop event if we found a valid match
+    if (bestMatch) {
+      const event = new CustomEvent('dragDrop', {
+        detail: {
+          targetId: bestMatch.targetId,
+          position: bestMatch.position
+        }
+      });
+      window.dispatchEvent(event);
     }
 
     // Reset position

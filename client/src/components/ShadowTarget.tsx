@@ -20,18 +20,65 @@ const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps
     setIsHovered(false);
   };
 
+  const calculateOverlapPercentage = (draggedRect: DOMRect, targetRect: DOMRect): number => {
+    // Calculate intersection area
+    const left = Math.max(draggedRect.left, targetRect.left);
+    const right = Math.min(draggedRect.right, targetRect.right);
+    const top = Math.max(draggedRect.top, targetRect.top);
+    const bottom = Math.min(draggedRect.bottom, targetRect.bottom);
+    
+    // No overlap if any dimension is negative
+    if (left >= right || top >= bottom) return 0;
+    
+    const intersectionArea = (right - left) * (bottom - top);
+    const targetArea = targetRect.width * targetRect.height;
+    
+    return (intersectionArea / targetArea) * 100;
+  };
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsHovered(false);
     
-    const targetId = e.dataTransfer.getData('text/plain');
-    const rect = e.currentTarget.getBoundingClientRect();
-    const position = {
-      x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2
-    };
+    // For desktop drag and drop, find the dragged element
+    const draggedElements = document.querySelectorAll('[draggable="true"]');
+    let draggedElement: Element | null = null;
     
-    onDrop(targetId, position);
+    // Find the currently dragged element (usually the one with higher z-index or being dragged)
+    draggedElements.forEach(element => {
+      const htmlElement = element as HTMLElement;
+      const style = getComputedStyle(htmlElement);
+      if (style.position === 'fixed' || style.zIndex === '1000') {
+        draggedElement = htmlElement;
+      }
+    });
+    
+    if (draggedElement) {
+      const draggedRect = (draggedElement as HTMLElement).getBoundingClientRect();
+      const targetRect = e.currentTarget.getBoundingClientRect();
+      const overlapPercentage = calculateOverlapPercentage(draggedRect, targetRect);
+      
+      // Only allow drop if overlap is >= 70%
+      if (overlapPercentage >= 70) {
+        const targetId = e.dataTransfer.getData('text/plain');
+        const position = {
+          x: targetRect.left + targetRect.width / 2,
+          y: targetRect.top + targetRect.height / 2
+        };
+        
+        onDrop(targetId, position);
+      }
+    } else {
+      // Fallback for cases where we can't find the dragged element
+      const targetId = e.dataTransfer.getData('text/plain');
+      const rect = e.currentTarget.getBoundingClientRect();
+      const position = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+      
+      onDrop(targetId, position);
+    }
   };
 
   // Listen for touch drop events
