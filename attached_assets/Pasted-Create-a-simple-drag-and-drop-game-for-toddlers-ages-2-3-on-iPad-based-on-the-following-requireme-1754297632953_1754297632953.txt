@@ -1,0 +1,118 @@
+Create a simple drag-and-drop game for toddlers (ages 2–3) on iPad, based on the following requirements:
+
+🎮 Game Description:
+- Each level shows:
+  - One draggable image (e.g., a cat).
+  - 10 silhouette (shadow) targets at the top of the screen.
+- The child must drag the image to the correct shadow.
+
+🧠 Game Logic:
+1. At the start of each level:
+   - Display one colored image (draggable) at the bottom.
+   - Display multiple shadow targets above (1 correct + 2–3 decoys).
+2. On drag and drop:
+   - If correct:
+     - Play a "success" sound (e.g., applause or "Great job!"). 
+     - Read the item name aloud in English (e.g., "Cat", "Apple").
+     - Show a simple visual effect (sparkles, fireworks).
+     - After ~1 second, load the next image and new shadows.
+   - If incorrect:
+     - Play a gentle "wrong" sound (e.g., "Try again!").
+     - Reset the image to its original position.
+
+3. End of topic:
+   - After all images are completed, show a celebratory screen.
+   - Offer options to replay or choose a new topic.
+
+📁 Assets & Structure:
+- Each topic (Animals, Fruits, Vehicles, etc.) contains:
+  - Colored PNG images (transparent background).
+  - Matching shadow PNGs (gray or black).
+  - Example folder:
+    /Assets/Topics/Animals/
+      - cat.png
+      - cat_shadow.png
+      - dog_shadow.png
+      - rabbit_shadow.png
+
+- Each level loads:
+  - 1 image
+  - 1 correct shadow
+  - 2–3 distractor shadows from the same topic
+
+🔊 Sound Files:
+- correct.mp3 – success sound
+- wrong.mp3 – fail sound
+- (optional) voice_<name>.mp3 – spoken prompts like “This is a cat!”
+
+🖼 UI Design:
+- Full iPad screen (4:3 aspect ratio, e.g., 2048x1536)
+- Top: shadow drop targets spaced evenly
+- Bottom: draggable image
+- No text; use voice prompts and icons
+- Gentle background color
+- Top-left corner: "Back" button (for parents)
+
+🛠 Technical Requirements:
+- Built with either:
+  - HTML5 + Phaser.js – for browser-based version
+- Code should be clean, modular, and extensible
+- New images should be loadable from folder without modifying code
+- Optimized for iPad touch input
+- Support basic audio and animation feedback
+
+🎯 Goal:
+Provide a starter project including:
+- 1 sample topic (3 images, each with 3 shadows)
+- Working drag-and-drop logic
+- Next image loads on correct match
+- iPad-compatible build
+
+
+
+📚 Suggested Topics with 10 Items Each:
+
+1. 🐶 Domestic Animals
+   - Cat, Dog, Chicken, Duck, Rabbit, Pig, Cow, Goat, Horse, Fish
+
+2. 🐯 Wild Animals
+   - Lion, Elephant, Tiger, Monkey, Bear, Giraffe, Zebra, Crocodile, Hippo, Snake
+
+3. 🦋 Insects
+   - Butterfly, Bee, Ladybug, Ant, Dragonfly, Grasshopper, Spider, Caterpillar, Snail, Fly
+
+4. 🚗 Vehicles
+   - Car, Bus, Fire Truck, Police Car, Train, Airplane, Helicopter, Boat, Bicycle, Scooter
+
+5. 🍎 Fruits
+   - Apple, Banana, Orange, Watermelon, Grape, Strawberry, Pineapple, Mango, Pear, Cherry
+
+6. 🍰 Food
+   - Cake, Ice Cream, Pizza, Sandwich, Cookie, Hot Dog, Hamburger, Cheese, Bread, Milk
+
+7. 🎈 Toys
+   - Teddy Bear, Ball, Toy Car, Doll, Puzzle Piece, Xylophone, Stacking Rings, Toy Drum, Toy Train, Toy Blocks
+
+8. 👕 Clothes
+   - Shirt, Pants, Dress, Hat, Shoes, Socks, Jacket, Scarf, Gloves, Shorts
+
+9. 📚 School Supplies
+   - Book, Pencil, Eraser, Ruler, Crayon, Paintbrush, Notebook, Scissors, School Bag, Glue Stick
+
+10. 🔵 Basic Shapes
+    - Circle, Square, Triangle, Rectangle, Star, Heart, Oval, Diamond, Pentagon, Hexagon
+
+11. 🌈 Colors
+    - Red, Blue, Yellow, Green, Orange, Purple, Pink, Brown, Black, White
+
+12. 🪴 Plants & Flowers
+    - Rose, Sunflower, Tulip, Daisy, Cactus, Palm Tree, Tree, Bush, Potted Plant, Bamboo
+
+13. 🧽 Household Items
+    - Chair, Table, Bed, Lamp, Fan, TV, Mirror, Clock, Shelf, Cabinet
+
+14. 🌞 Weather
+    - Sun, Cloud, Rain, Rainbow, Snowflake, Lightning, Umbrella, Wind, Thermometer, Moon
+
+15. 🧠 Facial Expressions
+    - Happy, Sad, Angry, Surprised, Scared, Tired, Confused, Excited, Crying, Laughing
