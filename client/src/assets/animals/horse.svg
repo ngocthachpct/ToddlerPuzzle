@@ -1,0 +1,41 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Horse body -->
+  <ellipse cx="65" cy="75" rx="28" ry="20" fill="#8B4513"/>
+  
+  <!-- Horse head -->
+  <ellipse cx="45" cy="50" rx="15" ry="18" fill="#8B4513"/>
+  
+  <!-- Horse snout -->
+  <ellipse cx="35" cy="58" rx="8" ry="6" fill="#A0522D"/>
+  
+  <!-- Horse ears -->
+  <ellipse cx="42" cy="35" rx="3" ry="8" fill="#8B4513" transform="rotate(-15 42 35)"/>
+  <ellipse cx="52" cy="35" rx="3" ry="8" fill="#8B4513" transform="rotate(15 52 35)"/>
+  
+  <!-- Horse eyes -->
+  <ellipse cx="43" cy="45" rx="3" ry="4" fill="#000000"/>
+  <ellipse cx="44" cy="43" rx="1" ry="2" fill="#FFFFFF"/>
+  
+  <!-- Horse mane -->
+  <path d="M50 30 Q55 25 60 35 Q65 30 70 40 Q75 35 80 45" stroke="#654321" stroke-width="4" fill="none"/>
+  <path d="M48 35 Q53 30 58 40 Q63 35 68 45 Q73 40 78 50" stroke="#654321" stroke-width="4" fill="none"/>
+  
+  <!-- Horse nostrils -->
+  <ellipse cx="32" cy="56" rx="1" ry="2" fill="#000000"/>
+  <ellipse cx="32" cy="60" rx="1" ry="2" fill="#000000"/>
+  
+  <!-- Horse legs -->
+  <rect x="50" y="92" width="4" height="18" fill="#8B4513"/>
+  <rect x="58" y="94" width="4" height="18" fill="#8B4513"/>
+  <rect x="72" y="94" width="4" height="18" fill="#8B4513"/>
+  <rect x="80" y="92" width="4" height="18" fill="#8B4513"/>
+  
+  <!-- Horse hooves -->
+  <ellipse cx="52" cy="110" rx="3" ry="2" fill="#000000"/>
+  <ellipse cx="60" cy="112" rx="3" ry="2" fill="#000000"/>
+  <ellipse cx="74" cy="112" rx="3" ry="2" fill="#000000"/>
+  <ellipse cx="82" cy="110" rx="3" ry="2" fill="#000000"/>
+  
+  <!-- Horse tail -->
+  <path d="M93 70 Q100 75 95 90 Q98 95 92 100" stroke="#654321" stroke-width="5" fill="none"/>
+</svg>

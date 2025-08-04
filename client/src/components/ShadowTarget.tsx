@@ -5,9 +5,10 @@ interface ShadowTargetProps {
   item: GameItem;
   onDrop: (targetId: string, position: { x: number; y: number }) => void;
   isDragOver: boolean;
+  isMatched: boolean;
 }
 
-const ShadowTarget = ({ item, onDrop, isDragOver }: ShadowTargetProps) => {
+const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -47,13 +48,13 @@ const ShadowTarget = ({ item, onDrop, isDragOver }: ShadowTargetProps) => {
   return (
     <div
       className={`
-        w-32 h-32 md:w-40 md:h-40 
-        bg-white/50 
+        w-24 h-24 md:w-28 md:h-28 
+        ${isMatched ? 'bg-white' : 'bg-white/50'} 
         rounded-2xl 
-        border-4 border-dashed 
+        ${isMatched ? 'border-4 border-solid border-green-400' : 'border-4 border-dashed'}
         flex items-center justify-center
         transition-all duration-200
-        ${isHovered || isDragOver ? 'border-blue-400 bg-blue-100/50 scale-105' : 'border-gray-300'}
+        ${isHovered || isDragOver ? 'border-blue-400 bg-blue-100/50 scale-105' : isMatched ? 'border-green-400' : 'border-gray-300'}
       `}
       data-shadow-target="true"
       data-target-id={item.id}
@@ -62,9 +63,9 @@ const ShadowTarget = ({ item, onDrop, isDragOver }: ShadowTargetProps) => {
       onDrop={handleDrop}
     >
       <img
-        src={item.shadow}
-        alt={`${item.name} shadow`}
-        className="w-full h-full object-contain opacity-60"
+        src={isMatched ? item.image : item.shadow}
+        alt={isMatched ? item.name : `${item.name} shadow`}
+        className={`w-full h-full object-contain ${isMatched ? 'opacity-100' : 'opacity-60'}`}
         draggable={false}
       />
     </div>

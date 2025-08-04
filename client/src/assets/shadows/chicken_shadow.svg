@@ -1,0 +1,26 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Chicken shadow silhouette -->
+  <g fill="#444444" opacity="0.7">
+    <!-- Chicken body -->
+    <ellipse cx="60" cy="75" rx="20" ry="15"/>
+    
+    <!-- Chicken head -->
+    <circle cx="60" cy="50" r="15"/>
+    
+    <!-- Chicken beak -->
+    <path d="M45 50 L40 52 L45 54 Z"/>
+    
+    <!-- Chicken comb -->
+    <path d="M52 35 L55 30 L58 35 L61 30 L64 35 L68 30 L70 35 L65 40 L55 40 Z"/>
+    
+    <!-- Chicken wing -->
+    <ellipse cx="70" cy="65" rx="8" ry="12"/>
+    
+    <!-- Chicken tail -->
+    <path d="M80 70 Q90 60 85 45 Q88 50 95 45 M82 75 Q92 65 87 50 Q90 55 97 50" stroke="#444444" stroke-width="3" fill="none"/>
+    
+    <!-- Chicken legs -->
+    <line x1="55" y1="90" x2="55" y2="100" stroke="#444444" stroke-width="3"/>
+    <line x1="65" y1="90" x2="65" y2="100" stroke="#444444" stroke-width="3"/>
+  </g>
+</svg>

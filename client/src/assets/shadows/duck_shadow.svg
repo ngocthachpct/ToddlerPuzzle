@@ -1,0 +1,27 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Duck shadow silhouette -->
+  <g fill="#444444" opacity="0.7">
+    <!-- Duck body -->
+    <ellipse cx="65" cy="75" rx="25" ry="18"/>
+    
+    <!-- Duck head -->
+    <circle cx="50" cy="50" r="18"/>
+    
+    <!-- Duck bill -->
+    <ellipse cx="35" cy="55" rx="8" ry="4"/>
+    
+    <!-- Duck wing -->
+    <ellipse cx="75" cy="70" rx="10" ry="15" transform="rotate(20 75 70)"/>
+    
+    <!-- Duck tail -->
+    <path d="M88 75 Q95 65 90 55" stroke="#444444" stroke-width="6" fill="none"/>
+    
+    <!-- Duck legs -->
+    <line x1="58" y1="90" x2="58" y2="100" stroke="#444444" stroke-width="3"/>
+    <line x1="72" y1="90" x2="72" y2="100" stroke="#444444" stroke-width="3"/>
+    
+    <!-- Duck webbed feet -->
+    <path d="M53 100 Q55 105 57 100 Q60 105 63 100"/>
+    <path d="M67 100 Q69 105 71 100 Q74 105 77 100"/>
+  </g>
+</svg>

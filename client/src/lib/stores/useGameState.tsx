@@ -17,7 +17,8 @@ export const useGameState = create<GameState>((set, get) => ({
   
   nextLevel: () => set((state) => {
     const nextLevel = state.currentLevel + 1;
-    const isComplete = nextLevel >= gameData.animals.length;
+    // Game completes after going through all animals twice (20 total)
+    const isComplete = nextLevel >= gameData.animals.length * 2;
     
     return {
       currentLevel: isComplete ? state.currentLevel : nextLevel,

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DraggableImage from "./DraggableImage";
 import ShadowTarget from "./ShadowTarget";
 import VisualEffects from "./VisualEffects";
@@ -14,17 +14,20 @@ const GameBoard = () => {
   const [showEffects, setShowEffects] = useState(false);
   const [effectsPosition, setEffectsPosition] = useState({ x: 0, y: 0 });
   const [isCorrectMatch, setIsCorrectMatch] = useState(false);
-
-  // Get current level data
-  const currentItem = gameData.animals[currentLevel] || gameData.animals[0];
+  const [matchedItems, setMatchedItems] = useState<Set<string>>(new Set());
   
-  // Create shadow targets (1 correct + 2-3 decoys)
-  const shadowTargets = [
-    currentItem, // Correct shadow
-    ...gameData.animals
-      .filter((_, index) => index !== currentLevel)
-      .slice(0, 2) // Get 2 decoys
-  ].sort(() => Math.random() - 0.5); // Shuffle positions
+  // Reset matched items when starting a new game
+  React.useEffect(() => {
+    if (currentLevel === 0) {
+      setMatchedItems(new Set());
+    }
+  }, [currentLevel]);
+
+  // Get current level data - cycle through animals for the draggable item
+  const currentItem = gameData.animals[currentLevel % gameData.animals.length];
+  
+  // All 10 shadows are always displayed
+  const shadowTargets = gameData.animals;
 
   const handleDragStart = (itemId: string) => {
     setDraggedItem(itemId);
@@ -35,11 +38,14 @@ const GameBoard = () => {
   };
 
   const handleDrop = async (targetId: string, position: { x: number; y: number }) => {
-    if (draggedItem === targetId) {
+    if (draggedItem === targetId && !matchedItems.has(targetId)) {
       // Correct match!
       setIsCorrectMatch(true);
       setEffectsPosition(position);
       setShowEffects(true);
+      
+      // Add to matched items so shadow gets replaced
+      setMatchedItems(prev => new Set(Array.from(prev).concat(targetId)));
       
       // Play success sound
       playSuccess();
@@ -54,12 +60,23 @@ const GameBoard = () => {
         console.log("Voice audio not available:", error);
       }
       
-      // Wait for effects, then advance to next level
+      // Wait for effects, then check if all items are matched
       setTimeout(() => {
         setShowEffects(false);
-        nextLevel();
+        
+        // Check if all 10 animals are matched
+        if (matchedItems.size + 1 >= gameData.animals.length) {
+          // All matched, proceed to celebration
+          nextLevel();
+        } else {
+          // Continue with next animal
+          nextLevel();
+        }
       }, 2000);
       
+    } else if (draggedItem === targetId && matchedItems.has(targetId)) {
+      // Already matched - no effect, just reset
+      resetLevel();
     } else {
       // Wrong match
       setIsCorrectMatch(false);
@@ -80,21 +97,22 @@ const GameBoard = () => {
   return (
     <div className="w-full h-full flex flex-col relative">
       {/* Shadow targets area */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="flex gap-8 justify-center flex-wrap max-w-4xl">
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="grid grid-cols-5 gap-4 max-w-5xl">
           {shadowTargets.map((target, index) => (
             <ShadowTarget
               key={`${target.id}-${index}`}
               item={target}
               onDrop={handleDrop}
               isDragOver={draggedItem === target.id}
+              isMatched={matchedItems.has(target.id)}
             />
           ))}
         </div>
       </div>
 
       {/* Draggable image area */}
-      <div className="h-64 flex items-center justify-center p-8">
+      <div className="h-48 flex items-center justify-center p-8">
         <DraggableImage
           item={currentItem}
           onDragStart={handleDragStart}

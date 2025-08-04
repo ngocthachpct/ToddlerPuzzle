@@ -1,0 +1,33 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cow shadow silhouette -->
+  <g fill="#444444" opacity="0.7">
+    <!-- Cow body -->
+    <ellipse cx="60" cy="75" rx="30" ry="22"/>
+    
+    <!-- Cow head -->
+    <ellipse cx="60" cy="45" rx="20" ry="15"/>
+    
+    <!-- Cow snout -->
+    <ellipse cx="60" cy="55" rx="10" ry="7"/>
+    
+    <!-- Cow ears -->
+    <ellipse cx="45" cy="40" rx="6" ry="10" transform="rotate(-20 45 40)"/>
+    <ellipse cx="75" cy="40" rx="6" ry="10" transform="rotate(20 75 40)"/>
+    
+    <!-- Cow horns -->
+    <path d="M48 30 L45 25 M72 30 L75 25" stroke="#444444" stroke-width="3"/>
+    
+    <!-- Cow udder -->
+    <ellipse cx="60" cy="88" rx="8" ry="4"/>
+    
+    <!-- Cow legs -->
+    <rect x="43" y="93" width="4" height="12"/>
+    <rect x="53" y="95" width="4" height="12"/>
+    <rect x="63" y="95" width="4" height="12"/>
+    <rect x="73" y="93" width="4" height="12"/>
+    
+    <!-- Cow tail -->
+    <path d="M90 75 Q95 85 90 95" stroke="#444444" stroke-width="3" fill="none"/>
+    <ellipse cx="90" cy="95" rx="2" ry="4"/>
+  </g>
+</svg>
