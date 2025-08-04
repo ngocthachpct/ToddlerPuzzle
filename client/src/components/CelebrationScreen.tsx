@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 interface CelebrationScreenProps {
   onRestart: () => void;
+  onBackToHome?: () => void;
 }
 
-const CelebrationScreen = ({ onRestart }: CelebrationScreenProps) => {
+const CelebrationScreen = ({ onRestart, onBackToHome }: CelebrationScreenProps) => {
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
@@ -69,6 +70,15 @@ const CelebrationScreen = ({ onRestart }: CelebrationScreenProps) => {
           >
             Play Again! 🔄
           </button>
+          
+          {onBackToHome && (
+            <button
+              onClick={onBackToHome}
+              className="bg-purple-500 hover:bg-purple-600 text-white font-bold text-2xl px-8 py-4 rounded-2xl shadow-lg transform transition-all hover:scale-105 active:scale-95"
+            >
+              Choose Topic 🏠
+            </button>
+          )}
         </div>
       </div>
 

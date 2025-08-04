@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
+import HomePage from "./components/HomePage";
 import GameBoard from "./components/GameBoard";
 import CelebrationScreen from "./components/CelebrationScreen";
 import { useGameState } from "./lib/stores/useGameState";
 import { useAudio } from "./lib/stores/useAudio";
+import { gameTopics } from "./lib/gameData";
 import "./index.css";
 
 function App() {
   const { currentLevel, isGameComplete, resetGame } = useGameState();
   const { setSuccessSound, setHitSound, isMuted, toggleMute } = useAudio();
+  const [currentScreen, setCurrentScreen] = useState<'home' | 'game' | 'celebration'>('home');
+  const [selectedTopic, setSelectedTopic] = useState<string>('domestic-animals');
   const [showCelebration, setShowCelebration] = useState(false);
 
   // Initialize audio
@@ -38,18 +42,46 @@ function App() {
     }
   }, [isGameComplete]);
 
+  const handleStartGame = (topicId: string) => {
+    setSelectedTopic(topicId);
+    setCurrentScreen('game');
+    setShowCelebration(false);
+    resetGame();
+  };
+
+  const handleBackToHome = () => {
+    setCurrentScreen('home');
+    setShowCelebration(false);
+    resetGame();
+  };
+
   const handleRestart = () => {
     setShowCelebration(false);
     resetGame();
   };
 
+  if (showCelebration) {
+    return (
+      <div className="w-full h-screen bg-gradient-to-b from-sky-200 via-green-100 to-yellow-50 overflow-hidden">
+        <CelebrationScreen 
+          onRestart={handleRestart}
+          onBackToHome={handleBackToHome}
+        />
+      </div>
+    );
+  }
+
+  if (currentScreen === 'home') {
+    return <HomePage onStartGame={handleStartGame} />;
+  }
+
   return (
     <div className="w-full h-screen bg-gradient-to-b from-sky-200 via-green-100 to-yellow-50 overflow-hidden">
       {/* Back button for parents */}
       <button
-        onClick={handleRestart}
+        onClick={handleBackToHome}
         className="absolute top-4 left-4 z-50 bg-white/80 hover:bg-white rounded-full p-3 shadow-lg transition-all"
-        aria-label="Back"
+        aria-label="Back to Home"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M19 12H5" />
@@ -77,11 +109,7 @@ function App() {
         )}
       </button>
 
-      {showCelebration ? (
-        <CelebrationScreen onRestart={handleRestart} />
-      ) : (
-        <GameBoard />
-      )}
+      <GameBoard selectedTopic={selectedTopic} />
     </div>
   );
 }
