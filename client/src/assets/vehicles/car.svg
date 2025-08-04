@@ -1,18 +1,79 @@
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Car body -->
-  <rect x="15" y="50" width="70" height="25" rx="5" fill="#FF4500" stroke="#8B0000" stroke-width="2"/>
-  <!-- Car roof -->
-  <rect x="25" y="35" width="50" height="20" rx="8" fill="#FF6347" stroke="#8B0000" stroke-width="2"/>
-  <!-- Windows -->
-  <rect x="30" y="38" width="15" height="12" rx="2" fill="#87CEEB" stroke="#4682B4" stroke-width="1"/>
-  <rect x="55" y="38" width="15" height="12" rx="2" fill="#87CEEB" stroke="#4682B4" stroke-width="1"/>
-  <!-- Wheels -->
-  <circle cx="30" cy="75" r="8" fill="#2F4F4F" stroke="#000" stroke-width="2"/>
-  <circle cx="70" cy="75" r="8" fill="#2F4F4F" stroke="#000" stroke-width="2"/>
-  <circle cx="30" cy="75" r="4" fill="#C0C0C0"/>
-  <circle cx="70" cy="75" r="4" fill="#C0C0C0"/>
-  <!-- Headlights -->
-  <circle cx="85" cy="60" r="3" fill="#FFFF00" stroke="#FFD700" stroke-width="1"/>
-  <!-- Door -->
-  <line x1="50" y1="50" x2="50" y2="75" stroke="#8B0000" stroke-width="2"/>
+  <defs>
+    <linearGradient id="carBodyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF6347"/>
+      <stop offset="50%" stop-color="#FF4500"/>
+      <stop offset="100%" stop-color="#8B0000"/>
+    </linearGradient>
+    <radialGradient id="wheelGrad" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#696969"/>
+      <stop offset="70%" stop-color="#2F4F4F"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="windowGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B0E0E6"/>
+      <stop offset="50%" stop-color="#87CEEB"/>
+      <stop offset="100%" stop-color="#4682B4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Car shadow -->
+  <ellipse cx="50" cy="85" rx="40" ry="6" fill="#000" opacity="0.2"/>
+  
+  <!-- Main car body with realistic curves -->
+  <path d="M 20 50 Q 15 55 15 65 Q 15 70 20 72 L 80 72 Q 85 70 85 65 Q 85 55 80 50 Z" fill="url(#carBodyGrad)" stroke="#8B0000" stroke-width="2"/>
+  
+  <!-- Car roof with proper perspective -->
+  <path d="M 28 35 Q 25 40 25 45 Q 25 48 28 50 L 72 50 Q 75 48 75 45 Q 75 40 72 35 Z" fill="url(#carBodyGrad)" stroke="#8B0000" stroke-width="2"/>
+  
+  <!-- Realistic windows with reflections -->
+  <path d="M 30 38 Q 28 40 28 45 Q 28 47 30 48 L 42 48 Q 44 47 44 45 Q 44 40 42 38 Z" fill="url(#windowGrad)" stroke="#4682B4" stroke-width="1"/>
+  <path d="M 56 38 Q 58 40 58 45 Q 58 47 56 48 L 68 48 Q 70 47 70 45 Q 70 40 68 38 Z" fill="url(#windowGrad)" stroke="#4682B4" stroke-width="1"/>
+  
+  <!-- Window reflections -->
+  <ellipse cx="35" cy="41" rx="4" ry="2" fill="#FFFFFF" opacity="0.6"/>
+  <ellipse cx="63" cy="41" rx="4" ry="2" fill="#FFFFFF" opacity="0.6"/>
+  
+  <!-- Detailed wheels with rims -->
+  <circle cx="30" cy="75" r="10" fill="url(#wheelGrad)" stroke="#000" stroke-width="2"/>
+  <circle cx="70" cy="75" r="10" fill="url(#wheelGrad)" stroke="#000" stroke-width="2"/>
+  <circle cx="30" cy="75" r="6" fill="#C0C0C0" stroke="#808080" stroke-width="1"/>
+  <circle cx="70" cy="75" r="6" fill="#C0C0C0" stroke="#808080" stroke-width="1"/>
+  <circle cx="30" cy="75" r="3" fill="#696969"/>
+  <circle cx="70" cy="75" r="3" fill="#696969"/>
+  
+  <!-- Rim spokes -->
+  <line x1="27" y1="72" x2="33" y2="78" stroke="#808080" stroke-width="1"/>
+  <line x1="33" y1="72" x2="27" y2="78" stroke="#808080" stroke-width="1"/>
+  <line x1="67" y1="72" x2="73" y2="78" stroke="#808080" stroke-width="1"/>
+  <line x1="73" y1="72" x2="67" y2="78" stroke="#808080" stroke-width="1"/>
+  
+  <!-- Headlights with realistic glow -->
+  <circle cx="85" cy="58" r="4" fill="#FFFF00" stroke="#FFD700" stroke-width="2"/>
+  <circle cx="85" cy="62" r="4" fill="#FFFF00" stroke="#FFD700" stroke-width="2"/>
+  <circle cx="85" cy="58" r="2" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="85" cy="62" r="2" fill="#FFFFFF" opacity="0.8"/>
+  
+  <!-- Car details -->
+  <rect x="20" y="55" width="60" height="15" rx="2" fill="#FF4500" stroke="#8B0000" stroke-width="1"/>
+  
+  <!-- Door handles and details -->
+  <rect x="22" y="58" width="2" height="4" rx="1" fill="#C0C0C0"/>
+  <rect x="76" y="58" width="2" height="4" rx="1" fill="#C0C0C0"/>
+  <line x1="50" y1="50" x2="50" y2="72" stroke="#8B0000" stroke-width="2"/>
+  
+  <!-- Grille -->
+  <rect x="80" y="55" width="8" height="12" rx="1" fill="#000" stroke="#333" stroke-width="1"/>
+  <line x1="82" y1="57" x2="86" y2="57" stroke="#666" stroke-width="0.5"/>
+  <line x1="82" y1="60" x2="86" y2="60" stroke="#666" stroke-width="0.5"/>
+  <line x1="82" y1="63" x2="86" y2="63" stroke="#666" stroke-width="0.5"/>
+  <line x1="82" y1="66" x2="86" y2="66" stroke="#666" stroke-width="0.5"/>
+  
+  <!-- Side mirrors -->
+  <ellipse cx="25" cy="45" rx="2" ry="1" fill="#000"/>
+  <ellipse cx="75" cy="45" rx="2" ry="1" fill="#000"/>
+  
+  <!-- Antenna -->
+  <line x1="35" y1="35" x2="35" y2="30" stroke="#C0C0C0" stroke-width="1"/>
+  <circle cx="35" cy="30" r="0.5" fill="#FF0000"/>
 </svg>

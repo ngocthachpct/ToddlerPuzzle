@@ -1,28 +1,86 @@
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Airplane body -->
-  <ellipse cx="50" cy="50" rx="35" ry="8" fill="#C0C0C0" stroke="#808080" stroke-width="2"/>
-  <!-- Airplane nose -->
-  <ellipse cx="85" cy="50" rx="8" ry="5" fill="#4169E1" stroke="#000080" stroke-width="2"/>
-  <!-- Wings -->
-  <ellipse cx="45" cy="50" rx="25" ry="4" fill="#87CEEB" stroke="#4682B4" stroke-width="2"/>
-  <!-- Tail -->
-  <polygon points="15,50 10,40 20,45 25,50 20,55 10,60" fill="#87CEEB" stroke="#4682B4" stroke-width="2"/>
-  <!-- Tail fin -->
-  <polygon points="15,50 10,35 20,40 20,50" fill="#4169E1" stroke="#000080" stroke-width="2"/>
-  <!-- Cockpit windows -->
-  <ellipse cx="75" cy="50" rx="8" ry="4" fill="#000080" opacity="0.7"/>
-  <ellipse cx="65" cy="50" rx="6" ry="3" fill="#87CEEB"/>
-  <!-- Passenger windows -->
-  <circle cx="55" cy="48" r="2" fill="#87CEEB"/>
-  <circle cx="50" cy="48" r="2" fill="#87CEEB"/>
-  <circle cx="45" cy="48" r="2" fill="#87CEEB"/>
-  <circle cx="40" cy="48" r="2" fill="#87CEEB"/>
-  <circle cx="35" cy="48" r="2" fill="#87CEEB"/>
-  <!-- Engines -->
-  <ellipse cx="40" cy="42" rx="6" ry="3" fill="#2F4F4F" stroke="#000" stroke-width="1"/>
-  <ellipse cx="40" cy="58" rx="6" ry="3" fill="#2F4F4F" stroke="#000" stroke-width="1"/>
-  <!-- Propeller -->
-  <line x1="90" y1="45" x2="95" y2="55" stroke="#8B4513" stroke-width="2"/>
-  <line x1="95" y1="45" x2="90" y2="55" stroke="#8B4513" stroke-width="2"/>
-  <circle cx="92.5" cy="50" r="2" fill="#654321"/>
+  <defs>
+    <linearGradient id="fuselageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E6E6FA"/>
+      <stop offset="50%" stop-color="#C0C0C0"/>
+      <stop offset="100%" stop-color="#808080"/>
+    </linearGradient>
+    <linearGradient id="wingGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B0E0E6"/>
+      <stop offset="50%" stop-color="#87CEEB"/>
+      <stop offset="100%" stop-color="#4682B4"/>
+    </linearGradient>
+    <radialGradient id="engineGrad" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#708090"/>
+      <stop offset="70%" stop-color="#2F4F4F"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Airplane shadow -->
+  <ellipse cx="52" cy="88" rx="40" ry="8" fill="#000" opacity="0.2"/>
+  
+  <!-- Main fuselage with realistic taper -->
+  <path d="M 15 50 Q 20 45 30 46 L 80 48 Q 90 49 92 50 Q 90 51 80 52 L 30 54 Q 20 55 15 50 Z" fill="url(#fuselageGrad)" stroke="#696969" stroke-width="2"/>
+  
+  <!-- Cockpit nose cone -->
+  <path d="M 80 48 Q 95 49 95 50 Q 95 51 80 52 Z" fill="#4169E1" stroke="#000080" stroke-width="2"/>
+  
+  <!-- Main wings with realistic airfoil shape -->
+  <path d="M 35 42 Q 20 40 10 42 Q 15 50 10 58 Q 20 60 35 58 Q 60 55 65 50 Q 60 45 35 42 Z" fill="url(#wingGrad)" stroke="#4682B4" stroke-width="2"/>
+  
+  <!-- Wing tip details -->
+  <ellipse cx="12" cy="50" rx="3" ry="8" fill="#4682B4"/>
+  
+  <!-- Tail assembly -->
+  <path d="M 15 50 Q 8 45 5 40 L 18 42 Q 20 45 18 48 Z" fill="url(#wingGrad)" stroke="#4682B4" stroke-width="2"/>
+  <path d="M 15 50 Q 8 55 5 60 L 18 58 Q 20 55 18 52 Z" fill="url(#wingGrad)" stroke="#4682B4" stroke-width="2"/>
+  
+  <!-- Vertical stabilizer -->
+  <path d="M 15 50 Q 8 35 5 30 L 18 35 Q 20 40 18 45 Z" fill="#4169E1" stroke="#000080" stroke-width="2"/>
+  
+  <!-- Cockpit windows with reflections -->
+  <ellipse cx="75" cy="50" rx="10" ry="5" fill="#000080" opacity="0.8"/>
+  <ellipse cx="75" cy="49" rx="7" ry="3" fill="#87CEEB" opacity="0.9"/>
+  <ellipse cx="72" cy="48" rx="3" ry="1.5" fill="#FFFFFF" opacity="0.6"/>
+  
+  <!-- Passenger windows with frames -->
+  <circle cx="65" cy="48.5" r="2.5" fill="#87CEEB" stroke="#696969" stroke-width="0.5"/>
+  <circle cx="58" cy="48.5" r="2.5" fill="#87CEEB" stroke="#696969" stroke-width="0.5"/>
+  <circle cx="51" cy="48.5" r="2.5" fill="#87CEEB" stroke="#696969" stroke-width="0.5"/>
+  <circle cx="44" cy="48.5" r="2.5" fill="#87CEEB" stroke="#696969" stroke-width="0.5"/>
+  <circle cx="37" cy="48.5" r="2.5" fill="#87CEEB" stroke="#696969" stroke-width="0.5"/>
+  <circle cx="30" cy="48.5" r="2.5" fill="#87CEEB" stroke="#696969" stroke-width="0.5"/>
+  
+  <!-- Window reflections -->
+  <circle cx="64" cy="47.5" r="1" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="57" cy="47.5" r="1" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="50" cy="47.5" r="1" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="43" cy="47.5" r="1" fill="#FFFFFF" opacity="0.6"/>
+  
+  <!-- Wing-mounted engines -->
+  <ellipse cx="40" cy="38" rx="8" ry="4" fill="url(#engineGrad)" stroke="#000" stroke-width="1"/>
+  <ellipse cx="40" cy="62" rx="8" ry="4" fill="url(#engineGrad)" stroke="#000" stroke-width="1"/>
+  <circle cx="35" cy="38" r="2" fill="#FF0000"/>
+  <circle cx="35" cy="62" r="2" fill="#FF0000"/>
+  
+  <!-- Landing gear -->
+  <rect x="45" y="54" width="2" height="6" fill="#696969"/>
+  <rect x="60" y="54" width="2" height="6" fill="#696969"/>
+  <circle cx="46" cy="62" r="2" fill="#000"/>
+  <circle cx="61" cy="62" r="2" fill="#000"/>
+  
+  <!-- Propeller with motion blur effect -->
+  <ellipse cx="95" cy="50" rx="6" ry="1" fill="#8B4513" opacity="0.4"/>
+  <ellipse cx="95" cy="50" rx="1" ry="6" fill="#8B4513" opacity="0.4"/>
+  <circle cx="95" cy="50" r="2" fill="#654321"/>
+  <circle cx="95" cy="50" r="1" fill="#8B4513"/>
+  
+  <!-- Navigation lights -->
+  <circle cx="65" cy="42" r="1" fill="#00FF00"/>
+  <circle cx="65" cy="58" r="1" fill="#FF0000"/>
+  <circle cx="8" cy="50" r="1" fill="#FFFFFF"/>
+  
+  <!-- Aircraft registration -->
+  <text x="52" y="53" font-family="Arial" font-size="3" fill="#000" font-weight="bold">N747</text>
 </svg>

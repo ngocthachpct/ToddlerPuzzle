@@ -1,20 +1,79 @@
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Butterfly body -->
-  <ellipse cx="50" cy="50" rx="2" ry="25" fill="#8B4513"/>
-  <!-- Antennae -->
-  <line x1="50" y1="25" x2="47" y2="20" stroke="#8B4513" stroke-width="1"/>
-  <line x1="50" y1="25" x2="53" y2="20" stroke="#8B4513" stroke-width="1"/>
-  <circle cx="47" cy="20" r="1" fill="#8B4513"/>
-  <circle cx="53" cy="20" r="1" fill="#8B4513"/>
-  <!-- Upper wings -->
-  <ellipse cx="35" cy="35" rx="12" ry="18" fill="#FF69B4" stroke="#FF1493" stroke-width="2"/>
-  <ellipse cx="65" cy="35" rx="12" ry="18" fill="#FF69B4" stroke="#FF1493" stroke-width="2"/>
+  <defs>
+    <radialGradient id="upperWingGrad" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#FFB6C1"/>
+      <stop offset="40%" stop-color="#FF69B4"/>
+      <stop offset="80%" stop-color="#FF1493"/>
+      <stop offset="100%" stop-color="#DC143C"/>
+    </radialGradient>
+    <radialGradient id="lowerWingGrad" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#FFFF99"/>
+      <stop offset="50%" stop-color="#FFA500"/>
+      <stop offset="100%" stop-color="#FF8C00"/>
+    </radialGradient>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#654321"/>
+      <stop offset="50%" stop-color="#8B4513"/>
+      <stop offset="100%" stop-color="#A0522D"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Butterfly body with segments -->
+  <ellipse cx="50" cy="50" rx="2.5" ry="28" fill="url(#bodyGrad)" stroke="#654321" stroke-width="1"/>
+  <ellipse cx="50" cy="45" rx="2" ry="5" fill="#654321"/>
+  <ellipse cx="50" cy="55" rx="2" ry="5" fill="#654321"/>
+  <ellipse cx="50" cy="65" rx="2" ry="5" fill="#654321"/>
+  
+  <!-- Head -->
+  <circle cx="50" cy="25" r="3" fill="#654321"/>
+  <circle cx="48" cy="24" r="0.5" fill="#000"/>
+  <circle cx="52" cy="24" r="0.5" fill="#000"/>
+  
+  <!-- Detailed antennae -->
+  <path d="M 50 25 Q 47 18 45 15" stroke="#654321" stroke-width="1" fill="none"/>
+  <path d="M 50 25 Q 53 18 55 15" stroke="#654321" stroke-width="1" fill="none"/>
+  <circle cx="45" cy="15" r="1.5" fill="#8B4513"/>
+  <circle cx="55" cy="15" r="1.5" fill="#8B4513"/>
+  
+  <!-- Upper wings with realistic shapes -->
+  <path d="M 50 35 Q 25 20 20 35 Q 18 50 25 55 Q 40 60 48 45 Z" fill="url(#upperWingGrad)" stroke="#FF1493" stroke-width="2"/>
+  <path d="M 50 35 Q 75 20 80 35 Q 82 50 75 55 Q 60 60 52 45 Z" fill="url(#upperWingGrad)" stroke="#FF1493" stroke-width="2"/>
+  
   <!-- Lower wings -->
-  <ellipse cx="40" cy="60" rx="8" ry="12" fill="#FFA500" stroke="#FF8C00" stroke-width="2"/>
-  <ellipse cx="60" cy="60" rx="8" ry="12" fill="#FFA500" stroke="#FF8C00" stroke-width="2"/>
-  <!-- Wing patterns -->
-  <circle cx="35" cy="35" r="4" fill="#FFB6C1"/>
-  <circle cx="65" cy="35" r="4" fill="#FFB6C1"/>
-  <circle cx="40" cy="60" r="3" fill="#FFFF00"/>
-  <circle cx="60" cy="60" r="3" fill="#FFFF00"/>
+  <path d="M 48 55 Q 30 65 25 75 Q 30 82 40 80 Q 50 75 48 65 Z" fill="url(#lowerWingGrad)" stroke="#FF8C00" stroke-width="2"/>
+  <path d="M 52 55 Q 70 65 75 75 Q 70 82 60 80 Q 50 75 52 65 Z" fill="url(#lowerWingGrad)" stroke="#FF8C00" stroke-width="2"/>
+  
+  <!-- Wing patterns and spots -->
+  <ellipse cx="35" cy="35" rx="6" ry="8" fill="#FFFFFF" opacity="0.8"/>
+  <ellipse cx="65" cy="35" rx="6" ry="8" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="35" cy="35" r="3" fill="#FF1493"/>
+  <circle cx="65" cy="35" r="3" fill="#FF1493"/>
+  <circle cx="30" cy="45" r="2" fill="#FFB6C1"/>
+  <circle cx="70" cy="45" r="2" fill="#FFB6C1"/>
+  
+  <!-- Lower wing patterns -->
+  <circle cx="35" cy="70" r="4" fill="#FFFF00"/>
+  <circle cx="65" cy="70" r="4" fill="#FFFF00"/>
+  <circle cx="35" cy="70" r="2" fill="#FF8C00"/>
+  <circle cx="65" cy="70" r="2" fill="#FF8C00"/>
+  <ellipse cx="40" cy="65" rx="2" ry="3" fill="#FF4500" opacity="0.8"/>
+  <ellipse cx="60" cy="65" rx="2" ry="3" fill="#FF4500" opacity="0.8"/>
+  
+  <!-- Wing edges and details -->
+  <path d="M 25 30 Q 20 35 25 40" stroke="#DC143C" stroke-width="1" fill="none"/>
+  <path d="M 75 30 Q 80 35 75 40" stroke="#DC143C" stroke-width="1" fill="none"/>
+  <path d="M 30 72 Q 25 75 30 78" stroke="#FF8C00" stroke-width="1" fill="none"/>
+  <path d="M 70 72 Q 75 75 70 78" stroke="#FF8C00" stroke-width="1" fill="none"/>
+  
+  <!-- Wing veins -->
+  <line x1="50" y1="35" x2="30" y2="25" stroke="#FF1493" stroke-width="0.5" opacity="0.6"/>
+  <line x1="50" y1="35" x2="70" y2="25" stroke="#FF1493" stroke-width="0.5" opacity="0.6"/>
+  <line x1="48" y1="55" x2="35" y2="70" stroke="#FF8C00" stroke-width="0.5" opacity="0.6"/>
+  <line x1="52" y1="55" x2="65" y2="70" stroke="#FF8C00" stroke-width="0.5" opacity="0.6"/>
+  
+  <!-- Wing highlights -->
+  <ellipse cx="28" cy="32" rx="3" ry="5" fill="#FFFFFF" opacity="0.5"/>
+  <ellipse cx="72" cy="32" rx="3" ry="5" fill="#FFFFFF" opacity="0.5"/>
+  <ellipse cx="32" cy="68" rx="2" ry="3" fill="#FFFFFF" opacity="0.4"/>
+  <ellipse cx="68" cy="68" rx="2" ry="3" fill="#FFFFFF" opacity="0.4"/>
 </svg>

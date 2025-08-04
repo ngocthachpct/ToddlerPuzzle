@@ -1,24 +1,107 @@
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Bear body -->
-  <ellipse cx="50" cy="65" rx="18" ry="22" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
-  <!-- Bear head -->
-  <circle cx="50" cy="35" r="16" fill="#F4A460" stroke="#8B4513" stroke-width="2"/>
-  <!-- Ears -->
-  <circle cx="38" cy="25" r="6" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
-  <circle cx="62" cy="25" r="6" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
-  <circle cx="38" cy="25" r="3" fill="#FF69B4"/>
-  <circle cx="62" cy="25" r="3" fill="#FF69B4"/>
-  <!-- Eyes -->
-  <circle cx="45" cy="32" r="2" fill="#000"/>
-  <circle cx="55" cy="32" r="2" fill="#000"/>
-  <!-- Nose -->
-  <ellipse cx="50" cy="38" rx="2" ry="1.5" fill="#000"/>
-  <!-- Mouth -->
-  <path d="M 47 42 Q 50 44 53 42" stroke="#000" stroke-width="2" fill="none"/>
-  <!-- Arms -->
-  <circle cx="30" cy="55" r="8" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
-  <circle cx="70" cy="55" r="8" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
-  <!-- Legs -->
-  <ellipse cx="42" cy="85" rx="6" ry="8" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
-  <ellipse cx="58" cy="85" rx="6" ry="8" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
+  <defs>
+    <radialGradient id="bearBodyGrad" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#F4A460"/>
+      <stop offset="60%" stop-color="#D2691E"/>
+      <stop offset="100%" stop-color="#8B4513"/>
+    </radialGradient>
+    <radialGradient id="bearHeadGrad" cx="0.2" cy="0.2">
+      <stop offset="0%" stop-color="#FFDAB9"/>
+      <stop offset="50%" stop-color="#F4A460"/>
+      <stop offset="100%" stop-color="#D2691E"/>
+    </radialGradient>
+    <filter id="furTexture" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence baseFrequency="0.9" numOctaves="4" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="discrete" tableValues="0.5 0.2 0.8 0.3"/>
+      </feComponentTransfer>
+      <feComposite operator="multiply" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  
+  <!-- Bear body with fur texture -->
+  <ellipse cx="50" cy="65" rx="20" ry="25" fill="url(#bearBodyGrad)" stroke="#654321" stroke-width="2" filter="url(#furTexture)"/>
+  
+  <!-- Body shading and curves -->
+  <ellipse cx="48" cy="60" rx="8" ry="12" fill="#CD853F" opacity="0.6"/>
+  <ellipse cx="55" cy="70" rx="6" ry="10" fill="#8B4513" opacity="0.4"/>
+  
+  <!-- Bear head with detailed features -->
+  <circle cx="50" cy="35" r="18" fill="url(#bearHeadGrad)" stroke="#654321" stroke-width="2" filter="url(#furTexture)"/>
+  
+  <!-- Snout area -->
+  <ellipse cx="50" cy="42" rx="8" ry="6" fill="#F5DEB3"/>
+  <ellipse cx="50" cy="41" rx="6" ry="4" fill="#FFDAB9"/>
+  
+  <!-- Detailed ears -->
+  <circle cx="38" cy="22" r="7" fill="url(#bearBodyGrad)" stroke="#654321" stroke-width="2"/>
+  <circle cx="62" cy="22" r="7" fill="url(#bearBodyGrad)" stroke="#654321" stroke-width="2"/>
+  <circle cx="38" cy="23" r="4" fill="#FF69B4"/>
+  <circle cx="62" cy="23" r="4" fill="#FF69B4"/>
+  <circle cx="38" cy="22" r="2" fill="#FFB6C1"/>
+  <circle cx="62" cy="22" r="2" fill="#FFB6C1"/>
+  
+  <!-- Eyes with realistic details -->
+  <ellipse cx="44" cy="30" rx="3" ry="4" fill="#FFFFFF"/>
+  <ellipse cx="56" cy="30" rx="3" ry="4" fill="#FFFFFF"/>
+  <circle cx="44" cy="31" r="2.5" fill="#000"/>
+  <circle cx="56" cy="31" r="2.5" fill="#000"/>
+  <circle cx="45" cy="29" r="1" fill="#FFFFFF"/>
+  <circle cx="57" cy="29" r="1" fill="#FFFFFF"/>
+  
+  <!-- Eyebrows -->
+  <path d="M 40 27 Q 44 25 48 27" stroke="#8B4513" stroke-width="1.5" fill="none"/>
+  <path d="M 52 27 Q 56 25 60 27" stroke="#8B4513" stroke-width="1.5" fill="none"/>
+  
+  <!-- Detailed nose -->
+  <ellipse cx="50" cy="38" rx="2.5" ry="2" fill="#000"/>
+  <ellipse cx="49.5" cy="37.5" rx="0.5" ry="0.5" fill="#333"/>
+  <ellipse cx="50.5" cy="37.5" rx="0.5" ry="0.5" fill="#333"/>
+  
+  <!-- Mouth and smile -->
+  <path d="M 46 43 Q 50 46 54 43" stroke="#000" stroke-width="2" fill="none"/>
+  <ellipse cx="50" cy="45" rx="1" ry="0.5" fill="#FF1493"/>
+  
+  <!-- Arms with paws -->
+  <ellipse cx="28" cy="55" rx="9" ry="12" fill="url(#bearBodyGrad)" stroke="#654321" stroke-width="2"/>
+  <ellipse cx="72" cy="55" rx="9" ry="12" fill="url(#bearBodyGrad)" stroke="#654321" stroke-width="2"/>
+  
+  <!-- Paws -->
+  <ellipse cx="28" cy="65" rx="6" ry="4" fill="#8B4513"/>
+  <ellipse cx="72" cy="65" rx="6" ry="4" fill="#8B4513"/>
+  <circle cx="25" cy="64" r="1" fill="#654321"/>
+  <circle cx="28" cy="62" r="1" fill="#654321"/>
+  <circle cx="31" cy="64" r="1" fill="#654321"/>
+  <circle cx="69" cy="64" r="1" fill="#654321"/>
+  <circle cx="72" cy="62" r="1" fill="#654321"/>
+  <circle cx="75" cy="64" r="1" fill="#654321"/>
+  
+  <!-- Legs with feet -->
+  <ellipse cx="42" cy="88" rx="7" ry="10" fill="url(#bearBodyGrad)" stroke="#654321" stroke-width="2"/>
+  <ellipse cx="58" cy="88" rx="7" ry="10" fill="url(#bearBodyGrad)" stroke="#654321" stroke-width="2"/>
+  
+  <!-- Feet -->
+  <ellipse cx="42" cy="95" rx="6" ry="3" fill="#8B4513"/>
+  <ellipse cx="58" cy="95" rx="6" ry="3" fill="#8B4513"/>
+  <circle cx="39" cy="94" r="0.8" fill="#654321"/>
+  <circle cx="42" cy="93" r="0.8" fill="#654321"/>
+  <circle cx="45" cy="94" r="0.8" fill="#654321"/>
+  <circle cx="55" cy="94" r="0.8" fill="#654321"/>
+  <circle cx="58" cy="93" r="0.8" fill="#654321"/>
+  <circle cx="61" cy="94" r="0.8" fill="#654321"/>
+  
+  <!-- Belly patch -->
+  <ellipse cx="50" cy="70" rx="8" ry="12" fill="#FFDAB9" opacity="0.8"/>
+  <ellipse cx="50" cy="70" rx="6" ry="9" fill="#F5DEB3" opacity="0.6"/>
+  
+  <!-- Bow tie -->
+  <polygon points="45,50 55,50 55,55 50,52 45,55" fill="#FF0000"/>
+  <polygon points="47,52 53,52 53,53 47,53" fill="#8B0000"/>
+  <rect x="49" y="50" width="2" height="5" fill="#8B0000"/>
+  
+  <!-- Stitching details -->
+  <path d="M 35 45 Q 40 47 45 45" stroke="#654321" stroke-width="0.5" stroke-dasharray="1,1" fill="none"/>
+  <path d="M 55 45 Q 60 47 65 45" stroke="#654321" stroke-width="0.5" stroke-dasharray="1,1" fill="none"/>
+  <path d="M 40 75 Q 50 78 60 75" stroke="#654321" stroke-width="0.5" stroke-dasharray="1,1" fill="none"/>
 </svg>
