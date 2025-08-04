@@ -21,7 +21,7 @@ export const useAudio = create<AudioState>((set, get) => ({
   backgroundMusic: null,
   hitSound: null,
   successSound: null,
-  isMuted: true, // Start muted by default
+  isMuted: false, // Start unmuted so sounds can play
   
   setBackgroundMusic: (music) => set({ backgroundMusic: music }),
   setHitSound: (sound) => set({ hitSound: sound }),
@@ -65,8 +65,11 @@ export const useAudio = create<AudioState>((set, get) => ({
         return;
       }
       
-      successSound.currentTime = 0;
-      successSound.play().catch(error => {
+      // Clone the sound to allow overlapping playback
+      const soundClone = successSound.cloneNode() as HTMLAudioElement;
+      soundClone.volume = 0.7; // Louder volume for success
+      soundClone.currentTime = 0;
+      soundClone.play().catch(error => {
         console.log("Success sound play prevented:", error);
       });
     }
