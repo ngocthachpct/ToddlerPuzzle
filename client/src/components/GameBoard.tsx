@@ -80,15 +80,22 @@ const GameBoard = () => {
       // Play success sound
       playSuccess();
       
-      // Play voice prompt
-      try {
-        const voiceAudio = new Audio(`/sounds/voice_${currentItem.id}.mp3`);
-        setTimeout(() => {
-          voiceAudio.play().catch(console.log);
-        }, 500);
-      } catch (error) {
-        console.log("Voice audio not available:", error);
-      }
+      // Play voice prompt using Web Speech API
+      setTimeout(() => {
+        if ('speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(currentItem.name);
+          utterance.lang = 'en-US';
+          utterance.rate = 0.8; // Slightly slower for toddlers
+          utterance.volume = 0.8;
+          utterance.pitch = 1.2; // Slightly higher pitch for children
+          
+          // Stop any previous speech and speak the new word
+          speechSynthesis.cancel();
+          speechSynthesis.speak(utterance);
+        } else {
+          console.log("Speech synthesis not supported");
+        }
+      }, 800); // Delay to let success sound play first
       
       // Wait for effects, then check if all items are matched
       setTimeout(() => {
