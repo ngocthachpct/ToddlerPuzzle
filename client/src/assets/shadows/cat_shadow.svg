@@ -1,0 +1,23 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cat shadow silhouette -->
+  <g fill="#444444" opacity="0.7">
+    <!-- Cat body -->
+    <ellipse cx="60" cy="80" rx="25" ry="20"/>
+    
+    <!-- Cat head -->
+    <circle cx="60" cy="50" r="22"/>
+    
+    <!-- Cat ears -->
+    <path d="M45 35 L40 20 L55 30 Z"/>
+    <path d="M75 35 L80 20 L65 30 Z"/>
+    
+    <!-- Cat tail -->
+    <path d="M85 75 Q95 65 90 50" stroke="#444444" stroke-width="8" fill="none"/>
+    
+    <!-- Cat paws -->
+    <ellipse cx="48" cy="95" rx="4" ry="6"/>
+    <ellipse cx="58" cy="97" rx="4" ry="6"/>
+    <ellipse cx="62" cy="97" rx="4" ry="6"/>
+    <ellipse cx="72" cy="95" rx="4" ry="6"/>
+  </g>
+</svg>
