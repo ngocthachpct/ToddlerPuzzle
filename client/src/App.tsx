@@ -44,7 +44,7 @@ function App() {
   };
 
   return (
-    <div className="w-full h-screen bg-gradient-to-b from-blue-100 to-green-100 overflow-hidden">
+    <div className="w-full h-screen bg-gradient-to-b from-sky-200 via-green-100 to-yellow-50 overflow-hidden">
       {/* Back button for parents */}
       <button
         onClick={handleRestart}
