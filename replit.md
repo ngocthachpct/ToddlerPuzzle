@@ -7,6 +7,7 @@ The game follows a simple learning progression: show one draggable image, displa
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
+Asset format preference: PNG images instead of SVG for all game assets.
 
 # System Architecture
 
@@ -32,9 +33,10 @@ Preferred communication style: Simple, everyday language.
 - **CelebrationScreen**: Level completion interface with restart options
 
 ## Data Management
-- **Game Data**: Static configuration for animals, images, and shadow assets
+- **Game Data**: Static configuration for animals, images, and shadow assets (PNG format)
 - **State Stores**: Separate Zustand stores for game progression, audio settings, and UI state
-- **Asset Organization**: Structured folder system for images, sounds, and shadow files by topic
+- **Asset Organization**: Structured folder system for PNG images, sounds, and shadow files by topic
+- **Asset Format**: All game assets converted from SVG to PNG format with detailed realistic enhancements
 
 ## Database Schema
 - **User Management**: Basic user table with username/password authentication
