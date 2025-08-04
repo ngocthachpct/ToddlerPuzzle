@@ -1,0 +1,12 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Banana body -->
+  <path d="M 30 80 Q 35 40 45 25 Q 55 15 70 25 Q 75 35 70 50 Q 65 70 60 80" fill="#FFFF00" stroke="#FFD700" stroke-width="2"/>
+  <!-- Banana ridges -->
+  <path d="M 35 75 Q 40 45 50 30" stroke="#FFA500" stroke-width="1" fill="none"/>
+  <path d="M 40 78 Q 45 48 55 33" stroke="#FFA500" stroke-width="1" fill="none"/>
+  <path d="M 50 80 Q 55 50 65 35" stroke="#FFA500" stroke-width="1" fill="none"/>
+  <!-- Banana top -->
+  <circle cx="65" cy="28" r="4" fill="#8B4513"/>
+  <!-- Highlight -->
+  <ellipse cx="45" cy="45" rx="8" ry="15" fill="#FFFFE0" opacity="0.6"/>
+</svg>

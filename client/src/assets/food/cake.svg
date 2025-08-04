@@ -1,0 +1,22 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cake base -->
+  <rect x="20" y="60" width="60" height="25" rx="5" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
+  <!-- Cake middle -->
+  <rect x="25" y="45" width="50" height="20" rx="3" fill="#FF69B4" stroke="#DC143C" stroke-width="2"/>
+  <!-- Cake top -->
+  <rect x="30" y="30" width="40" height="20" rx="3" fill="#FFFF99" stroke="#FFD700" stroke-width="2"/>
+  <!-- Frosting -->
+  <ellipse cx="50" cy="30" rx="20" ry="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+  <!-- Candles -->
+  <rect x="42" y="15" width="2" height="15" fill="#FF6347"/>
+  <rect x="48" y="15" width="2" height="15" fill="#FF6347"/>
+  <rect x="54" y="15" width="2" height="15" fill="#FF6347"/>
+  <!-- Flames -->
+  <ellipse cx="43" cy="12" rx="1" ry="3" fill="#FFA500"/>
+  <ellipse cx="49" cy="12" rx="1" ry="3" fill="#FFA500"/>
+  <ellipse cx="55" cy="12" rx="1" ry="3" fill="#FFA500"/>
+  <!-- Decorations -->
+  <circle cx="35" cy="40" r="2" fill="#FF1493"/>
+  <circle cx="50" cy="38" r="2" fill="#FF1493"/>
+  <circle cx="65" cy="40" r="2" fill="#FF1493"/>
+</svg>

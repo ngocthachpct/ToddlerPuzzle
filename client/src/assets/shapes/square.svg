@@ -1,0 +1,6 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Square -->
+  <rect x="15" y="15" width="70" height="70" fill="#4ECDC4" stroke="#26A69A" stroke-width="3" rx="5"/>
+  <!-- Inner highlight -->
+  <rect x="25" y="25" width="50" height="50" fill="none" stroke="#7FDFDB" stroke-width="2" opacity="0.6" rx="3"/>
+</svg>

@@ -1,0 +1,17 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sun body -->
+  <circle cx="50" cy="50" r="20" fill="#FFD700" stroke="#FFA500" stroke-width="3"/>
+  <!-- Sun rays -->
+  <line x1="50" y1="10" x2="50" y2="20" stroke="#FFD700" stroke-width="3"/>
+  <line x1="50" y1="80" x2="50" y2="90" stroke="#FFD700" stroke-width="3"/>
+  <line x1="10" y1="50" x2="20" y2="50" stroke="#FFD700" stroke-width="3"/>
+  <line x1="80" y1="50" x2="90" y2="50" stroke="#FFD700" stroke-width="3"/>
+  <line x1="21.5" y1="21.5" x2="28.5" y2="28.5" stroke="#FFD700" stroke-width="3"/>
+  <line x1="71.5" y1="71.5" x2="78.5" y2="78.5" stroke="#FFD700" stroke-width="3"/>
+  <line x1="78.5" y1="21.5" x2="71.5" y2="28.5" stroke="#FFD700" stroke-width="3"/>
+  <line x1="28.5" y1="71.5" x2="21.5" y2="78.5" stroke="#FFD700" stroke-width="3"/>
+  <!-- Sun face -->
+  <circle cx="42" cy="42" r="3" fill="#FF8C00"/>
+  <circle cx="58" cy="42" r="3" fill="#FF8C00"/>
+  <path d="M 40 60 Q 50 70 60 60" stroke="#FF8C00" stroke-width="3" fill="none"/>
+</svg>

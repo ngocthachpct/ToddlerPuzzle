@@ -1,0 +1,13 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Elephant shadow silhouette -->
+  <ellipse cx="55" cy="65" rx="30" ry="20" fill="#000" opacity="0.3"/>
+  <circle cx="35" cy="40" r="18" fill="#000" opacity="0.3"/>
+  <path d="M 20 45 Q 10 55 15 65 Q 20 70 25 65" stroke="#000" stroke-width="8" fill="none" opacity="0.3"/>
+  <ellipse cx="25" cy="35" rx="12" ry="18" fill="#000" opacity="0.3"/>
+  <ellipse cx="45" cy="35" rx="10" ry="15" fill="#000" opacity="0.3"/>
+  <rect x="35" y="80" width="8" height="15" fill="#000" opacity="0.3"/>
+  <rect x="48" y="80" width="8" height="15" fill="#000" opacity="0.3"/>
+  <rect x="61" y="80" width="8" height="15" fill="#000" opacity="0.3"/>
+  <rect x="74" y="80" width="8" height="15" fill="#000" opacity="0.3"/>
+  <path d="M 85 65 Q 95 70 90 75" stroke="#000" stroke-width="3" fill="none" opacity="0.3"/>
+</svg>

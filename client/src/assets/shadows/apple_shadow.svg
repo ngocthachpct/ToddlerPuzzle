@@ -1,0 +1,7 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Apple shadow silhouette -->
+  <path d="M 50 20 Q 35 25 35 50 Q 35 75 50 85 Q 65 75 65 50 Q 65 25 50 20 Z" fill="#000" opacity="0.3"/>
+  <path d="M 45 18 Q 50 15 55 18 Q 52 22 50 20 Q 48 22 45 18 Z" fill="#000" opacity="0.3"/>
+  <rect x="49" y="10" width="2" height="8" fill="#000" opacity="0.3"/>
+  <ellipse cx="55" cy="12" rx="4" ry="2" fill="#000" opacity="0.3" transform="rotate(30 55 12)"/>
+</svg>
