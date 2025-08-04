@@ -12,7 +12,7 @@ interface GameBoardProps {
 
 const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
   const { currentLevel, nextLevel, resetLevel } = useGameState();
-  const { playSuccess, playHit } = useAudio();
+  const { playSuccess, playHit, isMuted } = useAudio();
   
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [showEffects, setShowEffects] = useState(false);
@@ -70,9 +70,9 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
       // Play success sound
       playSuccess();
       
-      // Play voice prompt using Web Speech API
+      // Play voice prompt using Web Speech API (only if sound is not muted)
       setTimeout(() => {
-        if ('speechSynthesis' in window) {
+        if (!isMuted && 'speechSynthesis' in window) {
           const utterance = new SpeechSynthesisUtterance(currentItem.name);
           utterance.lang = 'en-US';
           utterance.rate = 0.8; // Slightly slower for toddlers
@@ -82,6 +82,8 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
           // Stop any previous speech and speak the new word
           speechSynthesis.cancel();
           speechSynthesis.speak(utterance);
+        } else if (isMuted) {
+          console.log("Voice narration skipped (muted)");
         } else {
           console.log("Speech synthesis not supported");
         }
