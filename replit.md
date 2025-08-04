@@ -35,8 +35,9 @@ Asset format preference: PNG images instead of SVG for all game assets.
 ## Data Management
 - **Game Data**: Static configuration for animals, images, and shadow assets (PNG format)
 - **State Stores**: Separate Zustand stores for game progression, audio settings, and UI state
-- **Asset Organization**: Structured folder system for PNG images, sounds, and shadow files by topic
+- **Asset Organization**: Theme-based folder structure with PNG images and shadows organized by topic/map
 - **Asset Format**: All game assets converted from SVG to PNG format with detailed realistic enhancements
+- **Folder Structure**: Each theme has its own folder with a shadows subfolder for matching silhouettes
 
 ## Database Schema
 - **User Management**: Basic user table with username/password authentication

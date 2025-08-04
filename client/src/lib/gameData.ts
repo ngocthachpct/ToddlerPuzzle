@@ -29,14 +29,14 @@ export const gameTopics: GameTopic[] = [
     items: [
       createGameItem("cat", "Cat", "domestic-animals"),
       createGameItem("dog", "Dog", "domestic-animals"),
-      createGameItem("chicken", "Chicken", "animals"),
-      createGameItem("duck", "Duck", "animals"),
-      createGameItem("rabbit", "Rabbit", "animals"),
-      createGameItem("pig", "Pig", "animals"),
-      createGameItem("cow", "Cow", "animals"),
-      createGameItem("goat", "Goat", "animals"),
-      createGameItem("horse", "Horse", "animals"),
-      createGameItem("fish", "Fish", "animals")
+      createGameItem("chicken", "Chicken", "domestic-animals"),
+      createGameItem("duck", "Duck", "domestic-animals"),
+      createGameItem("rabbit", "Rabbit", "domestic-animals"),
+      createGameItem("pig", "Pig", "domestic-animals"),
+      createGameItem("cow", "Cow", "domestic-animals"),
+      createGameItem("goat", "Goat", "domestic-animals"),
+      createGameItem("horse", "Horse", "domestic-animals"),
+      createGameItem("fish", "Fish", "domestic-animals")
     ]
   },
   {
