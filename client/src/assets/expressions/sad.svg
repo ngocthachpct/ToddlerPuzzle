@@ -1,0 +1,15 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Face -->
+  <circle cx="50" cy="50" r="35" fill="#FFFF99" stroke="#FFD700" stroke-width="3"/>
+  <!-- Eyes -->
+  <circle cx="38" cy="40" r="4" fill="#000"/>
+  <circle cx="62" cy="40" r="4" fill="#000"/>
+  <!-- Tears -->
+  <ellipse cx="34" cy="48" rx="2" ry="6" fill="#87CEEB"/>
+  <ellipse cx="66" cy="48" rx="2" ry="6" fill="#87CEEB"/>
+  <!-- Sad mouth -->
+  <path d="M 35 65 Q 50 55 65 65" stroke="#000" stroke-width="4" fill="none"/>
+  <!-- Eyebrows -->
+  <path d="M 30 32 Q 38 28 46 32" stroke="#000" stroke-width="3" fill="none"/>
+  <path d="M 54 32 Q 62 28 70 32" stroke="#000" stroke-width="3" fill="none"/>
+</svg>

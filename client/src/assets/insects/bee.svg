@@ -1,0 +1,31 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bee body -->
+  <ellipse cx="50" cy="50" rx="8" ry="20" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+  <!-- Bee stripes -->
+  <rect x="42" y="35" width="16" height="3" rx="1" fill="#000"/>
+  <rect x="42" y="45" width="16" height="3" rx="1" fill="#000"/>
+  <rect x="42" y="55" width="16" height="3" rx="1" fill="#000"/>
+  <rect x="42" y="65" width="16" height="3" rx="1" fill="#000"/>
+  <!-- Bee head -->
+  <circle cx="50" cy="25" r="8" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+  <!-- Eyes -->
+  <circle cx="46" cy="22" r="2" fill="#000"/>
+  <circle cx="54" cy="22" r="2" fill="#000"/>
+  <!-- Antennae -->
+  <line x1="48" y1="17" x2="45" y2="12" stroke="#000" stroke-width="1"/>
+  <line x1="52" y1="17" x2="55" y2="12" stroke="#000" stroke-width="1"/>
+  <circle cx="45" cy="12" r="1" fill="#000"/>
+  <circle cx="55" cy="12" r="1" fill="#000"/>
+  <!-- Wings -->
+  <ellipse cx="38" cy="40" rx="8" ry="12" fill="#E6F3FF" stroke="#B0E0E6" stroke-width="1" opacity="0.8"/>
+  <ellipse cx="62" cy="40" rx="8" ry="12" fill="#E6F3FF" stroke="#B0E0E6" stroke-width="1" opacity="0.8"/>
+  <ellipse cx="40" cy="55" rx="6" ry="8" fill="#E6F3FF" stroke="#B0E0E6" stroke-width="1" opacity="0.8"/>
+  <ellipse cx="60" cy="55" rx="6" ry="8" fill="#E6F3FF" stroke="#B0E0E6" stroke-width="1" opacity="0.8"/>
+  <!-- Stinger -->
+  <polygon points="50,70 48,75 52,75" fill="#000"/>
+  <!-- Legs -->
+  <line x1="42" y1="50" x2="35" y2="55" stroke="#000" stroke-width="2"/>
+  <line x1="42" y1="60" x2="35" y2="65" stroke="#000" stroke-width="2"/>
+  <line x1="58" y1="50" x2="65" y2="55" stroke="#000" stroke-width="2"/>
+  <line x1="58" y1="60" x2="65" y2="65" stroke="#000" stroke-width="2"/>
+</svg>

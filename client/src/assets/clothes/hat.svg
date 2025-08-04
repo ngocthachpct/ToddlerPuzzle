@@ -1,0 +1,18 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hat brim -->
+  <ellipse cx="50" cy="70" rx="35" ry="8" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+  <!-- Hat crown -->
+  <ellipse cx="50" cy="40" rx="20" ry="25" fill="#FF6347" stroke="#DC143C" stroke-width="2"/>
+  <!-- Hat band -->
+  <ellipse cx="50" cy="55" rx="22" ry="5" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+  <!-- Hat decoration -->
+  <ellipse cx="50" cy="55" rx="18" ry="3" fill="#FFA500"/>
+  <!-- Feather -->
+  <ellipse cx="70" cy="50" rx="2" ry="12" fill="#32CD32" transform="rotate(30 70 50)"/>
+  <ellipse cx="72" cy="48" rx="1" ry="8" fill="#228B22" transform="rotate(30 72 48)"/>
+  <!-- Crown pattern -->
+  <ellipse cx="45" cy="35" rx="3" ry="6" fill="#FF8C69" opacity="0.6"/>
+  <ellipse cx="55" cy="35" rx="3" ry="6" fill="#FF8C69" opacity="0.6"/>
+  <!-- Top highlight -->
+  <ellipse cx="50" cy="20" rx="8" ry="4" fill="#FFA07A" opacity="0.8"/>
+</svg>

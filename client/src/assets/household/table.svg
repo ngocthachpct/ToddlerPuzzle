@@ -1,0 +1,19 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Table top -->
+  <ellipse cx="50" cy="40" rx="40" ry="15" fill="#D2691E" stroke="#8B4513" stroke-width="2"/>
+  <!-- Table edge -->
+  <ellipse cx="50" cy="45" rx="40" ry="15" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+  <!-- Table top surface -->
+  <ellipse cx="50" cy="40" rx="35" ry="12" fill="#DEB887" opacity="0.8"/>
+  <!-- Table legs -->
+  <rect x="20" y="45" width="6" height="40" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  <rect x="74" y="45" width="6" height="40" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  <rect x="30" y="45" width="6" height="40" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  <rect x="64" y="45" width="6" height="40" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  <!-- Wood grain -->
+  <ellipse cx="50" cy="40" rx="25" ry="3" fill="#A0522D" opacity="0.4"/>
+  <ellipse cx="50" cy="36" rx="20" ry="2" fill="#A0522D" opacity="0.3"/>
+  <ellipse cx="50" cy="44" rx="30" ry="2" fill="#A0522D" opacity="0.3"/>
+  <!-- Table base support -->
+  <rect x="25" y="75" width="50" height="4" rx="2" fill="#654321"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 15 70 Q 20 80 50 80 Q 80 80 85 70 L 80 65 Q 75 60 50 60 Q 25 60 20 65 Z" fill="#000" opacity="0.3"/>
+  <rect x="35" y="45" width="30" height="20" rx="5" fill="#000" opacity="0.3"/>
+  <rect x="49" y="15" width="2" height="35" fill="#000" opacity="0.3"/>
+  <polygon points="51,20 51,45 75,40 75,25" fill="#000" opacity="0.3"/>
+  <polygon points="51,15 51,25 65,20" fill="#000" opacity="0.3"/>
+</svg>

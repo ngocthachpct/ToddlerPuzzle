@@ -1,0 +1,26 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Scooter wheels -->
+  <circle cx="25" cy="75" r="12" fill="none" stroke="#2F4F4F" stroke-width="3"/>
+  <circle cx="75" cy="75" r="12" fill="none" stroke="#2F4F4F" stroke-width="3"/>
+  <!-- Wheel centers -->
+  <circle cx="25" cy="75" r="4" fill="#C0C0C0"/>
+  <circle cx="75" cy="75" r="4" fill="#C0C0C0"/>
+  <!-- Scooter deck -->
+  <rect x="30" y="70" width="40" height="6" rx="3" fill="#4169E1" stroke="#000080" stroke-width="2"/>
+  <!-- Steering column -->
+  <line x1="70" y1="70" x2="65" y2="30" stroke="#C0C0C0" stroke-width="3"/>
+  <!-- Handlebars -->
+  <line x1="60" y1="25" x2="70" y2="25" stroke="#000" stroke-width="3"/>
+  <circle cx="60" cy="25" r="2" fill="#FF0000"/>
+  <circle cx="70" cy="25" r="2" fill="#FF0000"/>
+  <!-- Handlebar stem -->
+  <line x1="65" y1="25" x2="65" y2="30" stroke="#C0C0C0" stroke-width="2"/>
+  <!-- Front fork -->
+  <line x1="67" y1="35" x2="75" y2="65" stroke="#C0C0C0" stroke-width="2"/>
+  <!-- Rear support -->
+  <line x1="30" y1="72" x2="25" y2="65" stroke="#C0C0C0" stroke-width="2"/>
+  <!-- Foot brake -->
+  <rect x="28" y="78" width="8" height="3" rx="1" fill="#FF0000"/>
+  <!-- Reflector -->
+  <circle cx="35" cy="68" r="2" fill="#FFFF00" stroke="#FFD700" stroke-width="1"/>
+</svg>

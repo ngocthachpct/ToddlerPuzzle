@@ -1,0 +1,29 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Helicopter body -->
+  <ellipse cx="50" cy="60" rx="25" ry="15" fill="#4169E1" stroke="#000080" stroke-width="2"/>
+  <!-- Helicopter cockpit -->
+  <ellipse cx="50" cy="45" rx="18" ry="12" fill="#87CEEB" stroke="#4682B4" stroke-width="2"/>
+  <!-- Cockpit glass -->
+  <ellipse cx="50" cy="45" rx="15" ry="9" fill="#E6F3FF" opacity="0.8"/>
+  <!-- Main rotor mast -->
+  <rect x="49" y="20" width="2" height="15" fill="#2F4F4F"/>
+  <!-- Main rotor blades -->
+  <line x1="10" y1="20" x2="90" y2="20" stroke="#654321" stroke-width="3"/>
+  <line x1="50" y1="5" x2="50" y2="35" stroke="#654321" stroke-width="3"/>
+  <!-- Rotor hub -->
+  <circle cx="50" cy="20" r="4" fill="#2F4F4F" stroke="#000" stroke-width="2"/>
+  <!-- Tail boom -->
+  <rect x="75" y="58" width="20" height="4" rx="2" fill="#4169E1" stroke="#000080" stroke-width="2"/>
+  <!-- Tail fin -->
+  <polygon points="90,50 95,45 95,65 90,62" fill="#000080"/>
+  <!-- Tail rotor -->
+  <circle cx="95" cy="55" r="6" fill="none" stroke="#654321" stroke-width="2"/>
+  <line x1="89" y1="55" x2="101" y2="55" stroke="#654321" stroke-width="2"/>
+  <line x1="95" y1="49" x2="95" y2="61" stroke="#654321" stroke-width="2"/>
+  <!-- Landing skids -->
+  <rect x="30" y="72" width="40" height="3" rx="1" fill="#2F4F4F"/>
+  <rect x="32" y="70" width="4" height="8" rx="1" fill="#2F4F4F"/>
+  <rect x="64" y="70" width="4" height="8" rx="1" fill="#2F4F4F"/>
+  <!-- Door -->
+  <rect x="35" y="50" width="8" height="12" rx="2" fill="#000080" stroke="#000" stroke-width="1"/>
+</svg>

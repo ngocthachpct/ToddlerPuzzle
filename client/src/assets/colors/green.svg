@@ -1,0 +1,8 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Green color swatch -->
+  <rect x="10" y="10" width="80" height="80" fill="#00FF00" stroke="#008000" stroke-width="3" rx="10"/>
+  <!-- Shine effect -->
+  <ellipse cx="35" cy="35" rx="15" ry="20" fill="#66FF66" opacity="0.6"/>
+  <!-- Text -->
+  <text x="50" y="55" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#FFFFFF">GREEN</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pencil body -->
+  <rect x="40" y="15" width="20" height="70" rx="2" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+  <!-- Pencil tip -->
+  <polygon points="40,85 50,95 60,85" fill="#8B4513"/>
+  <!-- Lead tip -->
+  <polygon points="48,95 50,98 52,95" fill="#2F4F4F"/>
+  <!-- Metal ferrule -->
+  <rect x="40" y="10" width="20" height="8" rx="1" fill="#C0C0C0" stroke="#808080" stroke-width="1"/>
+  <!-- Eraser -->
+  <ellipse cx="50" cy="6" rx="8" ry="4" fill="#FF69B4" stroke="#DC143C" stroke-width="1"/>
+  <!-- Text/brand -->
+  <text x="50" y="50" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#FF6347">#2</text>
+  <!-- Wood texture lines -->
+  <line x1="45" y1="20" x2="45" y2="80" stroke="#FFA500" stroke-width="1" opacity="0.5"/>
+  <line x1="55" y1="20" x2="55" y2="80" stroke="#FFA500" stroke-width="1" opacity="0.5"/>
+  <!-- Shine -->
+  <ellipse cx="47" cy="40" rx="2" ry="15" fill="#FFFF99" opacity="0.6"/>
+</svg>

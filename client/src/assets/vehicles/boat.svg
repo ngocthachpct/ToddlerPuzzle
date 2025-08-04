@@ -1,0 +1,26 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Boat hull -->
+  <path d="M 15 70 Q 20 80 50 80 Q 80 80 85 70 L 80 65 Q 75 60 50 60 Q 25 60 20 65 Z" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+  <!-- Boat cabin -->
+  <rect x="35" y="45" width="30" height="20" rx="5" fill="#FFFFFF" stroke="#C0C0C0" stroke-width="2"/>
+  <!-- Mast -->
+  <rect x="49" y="15" width="2" height="35" fill="#8B4513"/>
+  <!-- Sail -->
+  <polygon points="51,20 51,45 75,40 75,25" fill="#FF6B6B" stroke="#DC143C" stroke-width="2"/>
+  <!-- Cabin windows -->
+  <rect x="40" y="50" width="6" height="6" rx="1" fill="#87CEEB"/>
+  <rect x="48" y="50" width="6" height="6" rx="1" fill="#87CEEB"/>
+  <rect x="56" y="50" width="6" height="6" rx="1" fill="#87CEEB"/>
+  <!-- Cabin door -->
+  <rect x="38" y="58" width="5" height="8" rx="1" fill="#8B4513"/>
+  <!-- Flag -->
+  <polygon points="51,15 51,25 65,20" fill="#FFD700" stroke="#DAA520" stroke-width="1"/>
+  <!-- Water line -->
+  <path d="M 10 75 Q 30 72 50 75 Q 70 78 90 75" stroke="#4682B4" stroke-width="2" fill="none"/>
+  <path d="M 10 78 Q 30 75 50 78 Q 70 81 90 78" stroke="#4682B4" stroke-width="2" fill="none"/>
+  <!-- Rope -->
+  <path d="M 51 45 Q 65 42 75 40" stroke="#8B4513" stroke-width="1" fill="none"/>
+  <!-- Anchor -->
+  <circle cx="25" cy="65" r="2" fill="#2F4F4F"/>
+  <path d="M 25 67 L 25 72 M 23 70 L 27 70" stroke="#2F4F4F" stroke-width="2"/>
+</svg>

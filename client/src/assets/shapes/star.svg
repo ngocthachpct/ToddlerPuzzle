@@ -1,0 +1,6 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Star -->
+  <polygon points="50,15 58,35 80,35 63,50 70,70 50,58 30,70 37,50 20,35 42,35" fill="#FFD700" stroke="#FFA500" stroke-width="3"/>
+  <!-- Inner highlight -->
+  <polygon points="50,25 55,40 65,40 57,48 60,60 50,55 40,60 43,48 35,40 45,40" fill="none" stroke="#FFFF99" stroke-width="2" opacity="0.6"/>
+</svg>

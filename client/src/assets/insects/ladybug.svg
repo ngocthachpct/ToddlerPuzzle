@@ -1,0 +1,32 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Ladybug body -->
+  <ellipse cx="50" cy="55" rx="18" ry="25" fill="#FF0000" stroke="#8B0000" stroke-width="2"/>
+  <!-- Ladybug head -->
+  <circle cx="50" cy="25" r="12" fill="#000"/>
+  <!-- Wing line -->
+  <line x1="50" y1="35" x2="50" y2="75" stroke="#000" stroke-width="2"/>
+  <!-- Spots -->
+  <circle cx="42" cy="45" r="3" fill="#000"/>
+  <circle cx="58" cy="45" r="3" fill="#000"/>
+  <circle cx="40" cy="60" r="3" fill="#000"/>
+  <circle cx="60" cy="60" r="3" fill="#000"/>
+  <circle cx="45" cy="70" r="2" fill="#000"/>
+  <circle cx="55" cy="70" r="2" fill="#000"/>
+  <!-- Eyes -->
+  <circle cx="46" cy="22" r="2" fill="#FFFFFF"/>
+  <circle cx="54" cy="22" r="2" fill="#FFFFFF"/>
+  <circle cx="46" cy="22" r="1" fill="#000"/>
+  <circle cx="54" cy="22" r="1" fill="#000"/>
+  <!-- Antennae -->
+  <line x1="48" y1="15" x2="45" y2="10" stroke="#000" stroke-width="1"/>
+  <line x1="52" y1="15" x2="55" y2="10" stroke="#000" stroke-width="1"/>
+  <circle cx="45" cy="10" r="1" fill="#000"/>
+  <circle cx="55" cy="10" r="1" fill="#000"/>
+  <!-- Legs -->
+  <line x1="35" y1="50" x2="28" y2="55" stroke="#000" stroke-width="2"/>
+  <line x1="35" y1="60" x2="28" y2="65" stroke="#000" stroke-width="2"/>
+  <line x1="35" y1="70" x2="28" y2="75" stroke="#000" stroke-width="2"/>
+  <line x1="65" y1="50" x2="72" y2="55" stroke="#000" stroke-width="2"/>
+  <line x1="65" y1="60" x2="72" y2="65" stroke="#000" stroke-width="2"/>
+  <line x1="65" y1="70" x2="72" y2="75" stroke="#000" stroke-width="2"/>
+</svg>

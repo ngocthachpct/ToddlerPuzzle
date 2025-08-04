@@ -1,0 +1,28 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Airplane body -->
+  <ellipse cx="50" cy="50" rx="35" ry="8" fill="#C0C0C0" stroke="#808080" stroke-width="2"/>
+  <!-- Airplane nose -->
+  <ellipse cx="85" cy="50" rx="8" ry="5" fill="#4169E1" stroke="#000080" stroke-width="2"/>
+  <!-- Wings -->
+  <ellipse cx="45" cy="50" rx="25" ry="4" fill="#87CEEB" stroke="#4682B4" stroke-width="2"/>
+  <!-- Tail -->
+  <polygon points="15,50 10,40 20,45 25,50 20,55 10,60" fill="#87CEEB" stroke="#4682B4" stroke-width="2"/>
+  <!-- Tail fin -->
+  <polygon points="15,50 10,35 20,40 20,50" fill="#4169E1" stroke="#000080" stroke-width="2"/>
+  <!-- Cockpit windows -->
+  <ellipse cx="75" cy="50" rx="8" ry="4" fill="#000080" opacity="0.7"/>
+  <ellipse cx="65" cy="50" rx="6" ry="3" fill="#87CEEB"/>
+  <!-- Passenger windows -->
+  <circle cx="55" cy="48" r="2" fill="#87CEEB"/>
+  <circle cx="50" cy="48" r="2" fill="#87CEEB"/>
+  <circle cx="45" cy="48" r="2" fill="#87CEEB"/>
+  <circle cx="40" cy="48" r="2" fill="#87CEEB"/>
+  <circle cx="35" cy="48" r="2" fill="#87CEEB"/>
+  <!-- Engines -->
+  <ellipse cx="40" cy="42" rx="6" ry="3" fill="#2F4F4F" stroke="#000" stroke-width="1"/>
+  <ellipse cx="40" cy="58" rx="6" ry="3" fill="#2F4F4F" stroke="#000" stroke-width="1"/>
+  <!-- Propeller -->
+  <line x1="90" y1="45" x2="95" y2="55" stroke="#8B4513" stroke-width="2"/>
+  <line x1="95" y1="45" x2="90" y2="55" stroke="#8B4513" stroke-width="2"/>
+  <circle cx="92.5" cy="50" r="2" fill="#654321"/>
+</svg>
