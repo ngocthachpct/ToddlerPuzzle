@@ -13,12 +13,15 @@ export interface GameTopic {
   items: GameItem[];
 }
 
-const createGameItem = (id: string, name: string, folder: string): GameItem => ({
-  id,
-  name,
-  image: `/src/assets/${folder}/${id}.svg`,
-  shadow: `/src/assets/shadows/${id}_shadow.svg`
-});
+const createGameItem = (id: string, name: string, folder: string, usesPng: boolean = false): GameItem => {
+  const extension = usesPng ? 'png' : 'svg';
+  return {
+    id,
+    name,
+    image: `/src/assets/${folder}/${id}.${extension}`,
+    shadow: usesPng ? `/src/assets/${folder}/shadows/${id}.${extension}` : `/src/assets/shadows/${id}_shadow.svg`
+  };
+};
 
 export const gameTopics: GameTopic[] = [
   {
@@ -45,7 +48,7 @@ export const gameTopics: GameTopic[] = [
     emoji: "🐯",
     description: "Animals from the wild",
     items: [
-      createGameItem("lion", "Lion", "wild-animals"),
+      createGameItem("lion", "Lion", "wild-animals", true),
       createGameItem("elephant", "Elephant", "wild-animals"),
       createGameItem("tiger", "Tiger", "wild-animals"),
       createGameItem("monkey", "Monkey", "wild-animals"),
