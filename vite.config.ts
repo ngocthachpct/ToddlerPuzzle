@@ -21,6 +21,7 @@ export default defineConfig({
     },
   },
   root: path.resolve(__dirname, "client"),
+  base: "./", // Ensure relative paths work in production
   build: {
     outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
