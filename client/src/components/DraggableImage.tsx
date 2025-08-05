@@ -21,13 +21,14 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     const rect = dragRef.current?.getBoundingClientRect();
     if (!rect) return;
 
-    // Calculate offset from touch point to element top-left
+    // Calculate offset from touch point to element's current top-left position
+    // This preserves where the user touched relative to the element
     offsetRef.current = {
       x: touch.clientX - rect.left,
       y: touch.clientY - rect.top
     };
 
-    // Store initial touch position
+    // Store initial touch position for reference
     startTouchRef.current = {
       x: touch.clientX,
       y: touch.clientY
@@ -46,11 +47,12 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     
     const touch = e.touches[0];
     
-    // Calculate new position based on touch movement
-    const deltaX = touch.clientX - startTouchRef.current.x;
-    const deltaY = touch.clientY - startTouchRef.current.y;
+    // Simple approach: position element at touch location minus offset
+    // This should keep the original touch point under the finger
+    const newX = touch.clientX - offsetRef.current.x;
+    const newY = touch.clientY - offsetRef.current.y;
     
-    setPosition({ x: deltaX, y: deltaY });
+    setPosition({ x: newX, y: newY });
     
     // Prevent default behaviors
     e.preventDefault();
@@ -149,7 +151,7 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     });
     
     // Dispatch appropriate event
-    if (bestMatch) {
+    if (bestMatch !== null) {
       // Correct match found
       console.log('✅ Best match found:', bestMatch);
       const event = new CustomEvent('dragDrop', {
@@ -218,7 +220,9 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
         ${isDragging ? 'dragging scale-110 z-50' : 'hover:scale-105'}
       `}
       style={{
-        transform: `translate(${position.x}px, ${position.y}px)`,
+        left: isDragging ? `${position.x}px` : 'auto',
+        top: isDragging ? `${position.y}px` : 'auto',
+        transform: !isDragging ? 'none' : 'none',
         position: isDragging ? 'fixed' : 'relative',
         zIndex: isDragging ? 1000 : 1,
         touchAction: 'none',
