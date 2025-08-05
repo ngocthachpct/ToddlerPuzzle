@@ -31,53 +31,36 @@ const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps
     if (left >= right || top >= bottom) return 0;
     
     const intersectionArea = (right - left) * (bottom - top);
-    const targetArea = targetRect.width * targetRect.height;
+    const draggedItemArea = draggedRect.width * draggedRect.height;
     
-    return (intersectionArea / targetArea) * 100;
+    // Safety check to prevent division by zero
+    if (draggedItemArea === 0) return 0;
+    
+    // Return percentage of dragged item that covers the shadow
+    return (intersectionArea / draggedItemArea) * 100;
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsHovered(false);
     
-    // For desktop drag and drop, find the dragged element
-    const draggedElements = document.querySelectorAll('[draggable="true"]');
-    let draggedElement: Element | null = null;
+    const draggedItemId = e.dataTransfer.getData('text/plain');
+    const rect = e.currentTarget.getBoundingClientRect();
     
-    // Find the currently dragged element (usually the one with higher z-index or being dragged)
-    draggedElements.forEach(element => {
-      const htmlElement = element as HTMLElement;
-      const style = getComputedStyle(htmlElement);
-      if (style.position === 'fixed' || style.zIndex === '1000') {
-        draggedElement = htmlElement;
-      }
-    });
-    
-    if (draggedElement) {
-      const draggedRect = (draggedElement as HTMLElement).getBoundingClientRect();
-      const targetRect = e.currentTarget.getBoundingClientRect();
-      const overlapPercentage = calculateOverlapPercentage(draggedRect, targetRect);
-      
-      // Only allow drop if overlap is >= 70%
-      if (overlapPercentage >= 70) {
-        const targetId = e.dataTransfer.getData('text/plain');
-        const position = {
-          x: targetRect.left + targetRect.width / 2,
-          y: targetRect.top + targetRect.height / 2
-        };
-        
-        onDrop(targetId, position);
-      }
-    } else {
-      // Fallback for cases where we can't find the dragged element
-      const targetId = e.dataTransfer.getData('text/plain');
-      const rect = e.currentTarget.getBoundingClientRect();
+    if (draggedItemId === item.id) {
+      // Correct match
       const position = {
         x: rect.left + rect.width / 2,
         y: rect.top + rect.height / 2
       };
-      
-      onDrop(targetId, position);
+      onDrop(draggedItemId, position);
+    } else {
+      // Wrong match - dispatch wrong-match event
+      const position = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+      onDrop('wrong-match', position);
     }
   };
 
@@ -85,12 +68,15 @@ const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps
   React.useEffect(() => {
     const handleTouchDrop = (e: CustomEvent) => {
       const { targetId, position } = e.detail;
-      onDrop(targetId, position);
+      // Only handle drop if it's for this specific shadow target
+      if (targetId === item.id) {
+        onDrop(targetId, position);
+      }
     };
 
     window.addEventListener('dragDrop', handleTouchDrop as EventListener);
     return () => window.removeEventListener('dragDrop', handleTouchDrop as EventListener);
-  }, [onDrop]);
+  }, [onDrop, item.id]);
 
   return (
     <div

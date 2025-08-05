@@ -13,11 +13,22 @@ export interface GameTopic {
   items: GameItem[];
 }
 
-const createGameItem = (id: string, name: string, folder: string): GameItem => ({
+// Image loading strategy for different formats
+const getImagePath = (folder: string, id: string, ext: string = "png"): string => {
+  // For development, try to use proper asset resolution
+  try {
+    return new URL(`../assets/${folder}/${id}.${ext}`, import.meta.url).href;
+  } catch {
+    // Fallback to simple path
+    return `/src/assets/${folder}/${id}.${ext}`;
+  }
+};
+
+const createGameItem = (id: string, name: string, folder: string, imageExt: string = "png"): GameItem => ({
   id,
   name,
-  image: `/src/assets/${folder}/${id}.png`,
-  shadow: `/src/assets/${folder}/shadows/${id}.png`
+  image: getImagePath(folder, id, imageExt),
+  shadow: getImagePath(`${folder}/shadows`, id, imageExt)
 });
 
 export const gameTopics: GameTopic[] = [
@@ -27,16 +38,16 @@ export const gameTopics: GameTopic[] = [
     emoji: "🐶",
     description: "Farm and pet animals",
     items: [
-      createGameItem("cat", "Cat", "domestic-animals"),
-      createGameItem("dog", "Dog", "domestic-animals"),
-      createGameItem("chicken", "Chicken", "domestic-animals"),
-      createGameItem("duck", "Duck", "domestic-animals"),
-      createGameItem("rabbit", "Rabbit", "domestic-animals"),
-      createGameItem("pig", "Pig", "domestic-animals"),
-      createGameItem("cow", "Cow", "domestic-animals"),
-      createGameItem("goat", "Goat", "domestic-animals"),
-      createGameItem("horse", "Horse", "domestic-animals"),
-      createGameItem("fish", "Fish", "domestic-animals")
+      createGameItem("cat", "Cat", "animals"),
+      createGameItem("dog", "Dog", "animals", "jpeg"),
+      createGameItem("chicken", "Chicken", "animals"),
+      createGameItem("duck", "Duck", "animals", "jpeg"),
+      createGameItem("rabbit", "Rabbit", "animals", "jpeg"),
+      createGameItem("pig", "Pig", "animals"),
+      createGameItem("cow", "Cow", "animals", "jpeg"),
+      createGameItem("goat", "Goat", "animals", "jpeg"),
+      createGameItem("horse", "Horse", "animals", "jpeg"),
+      createGameItem("fish", "Fish", "animals", "jpeg")
     ]
   },
   {

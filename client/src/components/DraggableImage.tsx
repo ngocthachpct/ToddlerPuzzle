@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { GameItem } from "../lib/gameData";
 
 interface DraggableImageProps {
@@ -52,9 +52,13 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     if (left >= right || top >= bottom) return 0;
     
     const intersectionArea = (right - left) * (bottom - top);
-    const targetArea = targetRect.width * targetRect.height;
+    const draggedItemArea = draggedRect.width * draggedRect.height;
     
-    return (intersectionArea / targetArea) * 100;
+    // Safety check to prevent division by zero
+    if (draggedItemArea === 0) return 0;
+    
+    // Return percentage of dragged item that covers the shadow
+    return (intersectionArea / draggedItemArea) * 100;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -75,33 +79,56 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     
     // Find all shadow targets and check overlap percentage
     const shadowTargets = document.querySelectorAll('[data-shadow-target="true"]');
-    let bestMatch: { targetId: string; overlapPercentage: number; position: { x: number; y: number } } | null = null;
+    
+    interface MatchResult {
+      targetId: string;
+      overlapPercentage: number;
+      position: { x: number; y: number };
+    }
+    
+    let bestMatch: MatchResult | null = null;
     
     shadowTargets.forEach(shadowTarget => {
       const targetRect = shadowTarget.getBoundingClientRect();
       const overlapPercentage = calculateOverlapPercentage(draggedRect, targetRect);
+      const targetId = shadowTarget.getAttribute('data-target-id');
       
-      if (overlapPercentage >= 70) {
-        const targetId = shadowTarget.getAttribute('data-target-id');
-        if (targetId && (!bestMatch || overlapPercentage > bestMatch.overlapPercentage)) {
-          bestMatch = {
-            targetId,
-            overlapPercentage,
-            position: {
-              x: targetRect.left + targetRect.width / 2,
-              y: targetRect.top + targetRect.height / 2
-            }
-          };
+      // Store the best match regardless of ID, but only process if ID matches
+      if (overlapPercentage >= 70 && targetId && targetId === item.id) {
+        const currentMatch: MatchResult = {
+          targetId,
+          overlapPercentage,
+          position: {
+            x: targetRect.left + targetRect.width / 2,
+            y: targetRect.top + targetRect.height / 2
+          }
+        };
+        
+        if (!bestMatch || overlapPercentage > bestMatch.overlapPercentage) {
+          bestMatch = currentMatch;
         }
       }
     });
     
     // Trigger drop event if we found a valid match
-    if (bestMatch) {
+    if (bestMatch !== null) {
+      const matchResult = bestMatch as MatchResult;
       const event = new CustomEvent('dragDrop', {
         detail: {
-          targetId: bestMatch.targetId,
-          position: bestMatch.position
+          targetId: matchResult.targetId,
+          position: matchResult.position
+        }
+      });
+      window.dispatchEvent(event);
+    } else {
+      // No valid match found - trigger wrong match effect
+      const event = new CustomEvent('dragDrop', {
+        detail: {
+          targetId: 'wrong-match', // Special indicator for wrong match
+          position: {
+            x: draggedRect.left + draggedRect.width / 2,
+            y: draggedRect.top + draggedRect.height / 2
+          }
         }
       });
       window.dispatchEvent(event);

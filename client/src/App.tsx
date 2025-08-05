@@ -24,7 +24,7 @@ function App() {
         setSuccessSound(successAudio);
 
         // Load wrong sound
-        const wrongAudio = new Audio("/sounds/wrong.mp3");
+        const wrongAudio = new Audio("/sounds/hit.mp3");
         wrongAudio.preload = "auto";
         setHitSound(wrongAudio);
       } catch (error) {

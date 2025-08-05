@@ -58,7 +58,22 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
   };
 
   const handleDrop = async (targetId: string, position: { x: number; y: number }) => {
-    if (draggedItem === targetId && !matchedItems.has(targetId)) {
+    if (targetId === 'wrong-match') {
+      // Wrong match - show error effects
+      setIsCorrectMatch(false);
+      setEffectsPosition(position);
+      setShowEffects(true);
+      
+      // Play wrong sound
+      playHit();
+      
+      // Reset after brief feedback
+      setTimeout(() => {
+        setShowEffects(false);
+        resetLevel();
+      }, 1000);
+      
+    } else if (draggedItem === targetId && !matchedItems.has(targetId)) {
       // Correct match!
       setIsCorrectMatch(true);
       setEffectsPosition(position);
@@ -68,6 +83,7 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
       setMatchedItems(prev => new Set(Array.from(prev).concat(targetId)));
       
       // Play success sound
+      console.log('🔊 Playing success sound for correct match');
       playSuccess();
       
       // Play voice prompt using Web Speech API (only if sound is not muted)
