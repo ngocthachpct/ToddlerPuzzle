@@ -254,8 +254,8 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
         })}
       </div>
 
-      {/* Draggable image area - positioned at bottom left corner */}
-      <div className="absolute bottom-4 left-4 z-20">
+      {/* Draggable image area - positioned at bottom left corner with enough margin */}
+      <div className="absolute bottom-8 left-8 z-20 sm:bottom-12 sm:left-12">
         <DraggableImage
           item={currentItem}
           onDragStart={handleDragStart}
