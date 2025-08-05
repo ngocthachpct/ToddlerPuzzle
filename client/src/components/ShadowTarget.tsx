@@ -11,6 +11,11 @@ interface ShadowTargetProps {
 const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  // Debug logging
+  React.useEffect(() => {
+    console.log(`🎯 ShadowTarget ${item.id}:`, { isMatched, isDragOver });
+  }, [isMatched, isDragOver, item.id]);
+
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsHovered(true);
@@ -68,10 +73,14 @@ const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps
   React.useEffect(() => {
     const handleTouchDrop = (e: CustomEvent) => {
       const { targetId, position } = e.detail;
-      // Only handle drop if it's for this specific shadow target
+      console.log('🎯 ShadowTarget received touch drop:', { targetId, itemId: item.id, position });
+      
+      // Only handle correct matches for this specific shadow target
       if (targetId === item.id) {
+        console.log('✅ Touch drop match for', item.id);
         onDrop(targetId, position);
       }
+      // Note: wrong-match events are handled by GameBoard directly
     };
 
     window.addEventListener('dragDrop', handleTouchDrop as EventListener);
@@ -82,7 +91,7 @@ const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps
     <div
       className={`
         shadow-target
-        w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32
+        w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40
         ${isMatched ? 'bg-white' : 'bg-white/50'} 
         rounded-2xl 
         ${isMatched ? 'border-4 border-solid border-green-400' : 'border-4 border-dashed'}
@@ -97,12 +106,14 @@ const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      <img
-        src={isMatched ? item.image : item.shadow}
-        alt={isMatched ? item.name : `${item.name} shadow`}
-        className={`w-full h-full object-contain ${isMatched ? 'opacity-100' : 'opacity-60'}`}
-        draggable={false}
-      />
+      <div className="w-full h-full p-2 flex items-center justify-center">
+        <img
+          src={isMatched ? item.image : item.shadow}
+          alt={isMatched ? item.name : `${item.name} shadow`}
+          className={`w-full h-full object-contain ${isMatched ? 'opacity-100' : 'opacity-60'}`}
+          draggable={false}
+        />
+      </div>
     </div>
   );
 };

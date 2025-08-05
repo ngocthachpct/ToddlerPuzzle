@@ -92,24 +92,25 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
       return;
     }
     
-    // Calculate current element position with offset
-    const currentX = touch.clientX - offsetRef.current.x;
-    const currentY = touch.clientY - offsetRef.current.y;
-    const elementWidth = draggedElement.offsetWidth;
-    const elementHeight = draggedElement.offsetHeight;
+    // Get actual dragged element position on screen
+    const draggedRect = draggedElement.getBoundingClientRect();
     
-    // Create a DOMRect-like object for the current dragged position
-    const draggedRect = {
-      left: currentX,
-      top: currentY,
-      right: currentX + elementWidth,
-      bottom: currentY + elementHeight,
-      width: elementWidth,
-      height: elementHeight
-    } as DOMRect;
+    console.log('🎯 Touch end - element position:', {
+      rect: {
+        left: draggedRect.left.toFixed(1),
+        top: draggedRect.top.toFixed(1),
+        width: draggedRect.width.toFixed(1),
+        height: draggedRect.height.toFixed(1)
+      },
+      touch: {
+        x: touch.clientX.toFixed(1),
+        y: touch.clientY.toFixed(1)
+      }
+    });
     
     // Find all shadow targets and check overlap
     const shadowTargets = document.querySelectorAll('[data-shadow-target="true"]');
+    console.log('🎯 Found shadow targets:', shadowTargets.length);
     
     interface MatchResult {
       targetId: string;
@@ -119,13 +120,19 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     
     let bestMatch: MatchResult | null = null;
     
-    shadowTargets.forEach(shadowTarget => {
+    shadowTargets.forEach((shadowTarget, index) => {
       const targetRect = shadowTarget.getBoundingClientRect();
       const overlapPercentage = calculateOverlapPercentage(draggedRect, targetRect);
       const targetId = shadowTarget.getAttribute('data-target-id');
       
-      // Check for valid match (70% overlap + correct ID)
-      if (overlapPercentage >= 70 && targetId && targetId === item.id) {
+      console.log(`🎯 Shadow ${index} (${targetId}):`, {
+        overlap: overlapPercentage.toFixed(1) + '%',
+        isCorrectId: targetId === item.id,
+        meetsThreshold: overlapPercentage >= 50
+      });
+      
+      // Check for valid match (50% overlap + correct ID)
+      if (overlapPercentage >= 50 && targetId && targetId === item.id) {
         const currentMatch: MatchResult = {
           targetId,
           overlapPercentage,
@@ -144,6 +151,7 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     // Dispatch appropriate event
     if (bestMatch) {
       // Correct match found
+      console.log('✅ Best match found:', bestMatch);
       const event = new CustomEvent('dragDrop', {
         detail: {
           targetId: bestMatch.targetId,
@@ -153,12 +161,13 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
       window.dispatchEvent(event);
     } else {
       // No valid match - trigger wrong match effect
+      console.log('❌ No valid match found');
       const event = new CustomEvent('dragDrop', {
         detail: {
           targetId: 'wrong-match',
           position: {
-            x: currentX + elementWidth / 2,
-            y: currentY + elementHeight / 2
+            x: draggedRect.left + draggedRect.width / 2,
+            y: draggedRect.top + draggedRect.height / 2
           }
         }
       });
@@ -228,7 +237,7 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
       onDragStart={!isTouchDevice ? handleDragStart : undefined}
       onDragEnd={!isTouchDevice ? handleDragEndDesktop : undefined}
     >
-      <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 bg-white rounded-2xl shadow-lg p-3 md:p-4 flex items-center justify-center">
+      <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 bg-white rounded-2xl shadow-lg p-2 sm:p-3 flex items-center justify-center">
         <img
           src={item.image}
           alt={item.name}

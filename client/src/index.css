@@ -77,13 +77,38 @@ canvas {
 @media (pointer: coarse) {
   /* Increase touch targets for better accessibility */
   .shadow-target {
-    min-width: 80px;
-    min-height: 80px;
+    min-width: 112px;
+    min-height: 112px;
   }
   
   .draggable-item {
-    min-width: 80px;
-    min-height: 80px;
+    min-width: 112px;
+    min-height: 112px;
+  }
+}
+
+/* Specific iPad optimizations */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape),
+       screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  /* iPad specific styles */
+  .draggable-item {
+    min-width: 144px;
+    min-height: 144px;
+  }
+  
+  .shadow-target {
+    min-width: 144px;
+    min-height: 144px;
+  }
+  
+  /* Better spacing for iPad */
+  .game-board-container {
+    padding: 16px;
+  }
+  
+  .draggable-area {
+    min-height: 180px;
+    padding: 24px;
   }
 }
 

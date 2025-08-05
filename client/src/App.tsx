@@ -9,31 +9,33 @@ import "./index.css";
 
 function App() {
   const { currentLevel, isGameComplete, resetGame } = useGameState();
-  const { setSuccessSound, setHitSound, isMuted, toggleMute } = useAudio();
+  const { isMuted, toggleMute, initializeAudio } = useAudio();
   const [currentScreen, setCurrentScreen] = useState<'home' | 'game' | 'celebration'>('home');
   const [selectedTopic, setSelectedTopic] = useState<string>('domestic-animals');
   const [showCelebration, setShowCelebration] = useState(false);
 
-  // Initialize audio
+  // Initialize audio on first user interaction
   useEffect(() => {
-    const initAudio = async () => {
-      try {
-        // Load success sound
-        const successAudio = new Audio("/sounds/success.mp3");
-        successAudio.preload = "auto";
-        setSuccessSound(successAudio);
-
-        // Load wrong sound
-        const wrongAudio = new Audio("/sounds/hit.mp3");
-        wrongAudio.preload = "auto";
-        setHitSound(wrongAudio);
-      } catch (error) {
-        console.log("Audio loading failed:", error);
-      }
+    const handleFirstInteraction = async () => {
+      await initializeAudio();
+      
+      // Remove listeners after first interaction
+      document.removeEventListener('touchstart', handleFirstInteraction);
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
     };
 
-    initAudio();
-  }, [setSuccessSound, setHitSound]);
+    // Add listeners for first user interaction (required for iOS)
+    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    document.addEventListener('click', handleFirstInteraction, { once: true });
+    document.addEventListener('keydown', handleFirstInteraction, { once: true });
+
+    return () => {
+      document.removeEventListener('touchstart', handleFirstInteraction);
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
+    };
+  }, [initializeAudio]);
 
   // Show celebration when game is complete
   useEffect(() => {

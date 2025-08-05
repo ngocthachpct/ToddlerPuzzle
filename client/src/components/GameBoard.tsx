@@ -34,7 +34,61 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
     // Generate new random order for shadow positions
     const shuffledShadows = [...topicItems].sort(() => Math.random() - 0.5);
     setShadowOrder(shuffledShadows);
+    // Generate random positions for shadows
+    generateRandomPositions();
   }, [selectedTopic, topicItems.length]);
+
+  // Listen for wrong-match touch events
+  React.useEffect(() => {
+    const handleWrongMatchEvent = (e: CustomEvent) => {
+      const { targetId, position } = e.detail;
+      
+      // Only handle wrong-match events
+      if (targetId === 'wrong-match') {
+        console.log('❌ GameBoard handling wrong-match event');
+        handleDrop('wrong-match', position);
+      }
+    };
+
+    window.addEventListener('dragDrop', handleWrongMatchEvent as EventListener);
+    return () => window.removeEventListener('dragDrop', handleWrongMatchEvent as EventListener);
+  }, []);
+
+  // Random positions for shadows
+  const [shadowPositions, setShadowPositions] = React.useState<Array<{x: number, y: number}>>([]);
+
+  const generateRandomPositions = () => {
+    const positions: Array<{x: number, y: number}> = [];
+    const shadowCount = topicItems.length; // Show ALL shadows, not limited
+    
+    // Use a more reliable grid-based approach
+    const gridCols = Math.ceil(Math.sqrt(shadowCount));
+    const gridRows = Math.ceil(shadowCount / gridCols);
+    const cellWidth = 70 / gridCols; // Use more screen width
+    const cellHeight = 55 / gridRows; // Use more screen height
+    
+    for (let i = 0; i < shadowCount; i++) {
+      const gridX = i % gridCols;
+      const gridY = Math.floor(i / gridCols);
+      
+      // Calculate base position in grid cell
+      const baseX = 10 + gridX * cellWidth + cellWidth / 2;
+      const baseY = 10 + gridY * cellHeight + cellHeight / 2;
+      
+      // Add small random offset within cell bounds
+      const randomX = baseX + (Math.random() - 0.5) * (cellWidth * 0.3);
+      const randomY = baseY + (Math.random() - 0.5) * (cellHeight * 0.3);
+      
+      const position = {
+        x: Math.max(8, Math.min(85, randomX)), // Clamp to safe bounds
+        y: Math.max(8, Math.min(65, randomY))
+      };
+      
+      positions.push(position);
+    }
+    
+    setShadowPositions(positions);
+  };
 
   // Get random item for draggable (not based on order)
   const [randomOrder, setRandomOrder] = useState<number[]>([]);
@@ -58,8 +112,11 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
   };
 
   const handleDrop = async (targetId: string, position: { x: number; y: number }) => {
+    console.log('🎯 Drop event:', { targetId, draggedItem, position });
+    
     if (targetId === 'wrong-match') {
       // Wrong match - show error effects
+      console.log('❌ Wrong match detected');
       setIsCorrectMatch(false);
       setEffectsPosition(position);
       setShowEffects(true);
@@ -75,12 +132,18 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
       
     } else if (draggedItem === targetId && !matchedItems.has(targetId)) {
       // Correct match!
+      console.log('✅ Correct match! Adding to matched items:', targetId);
       setIsCorrectMatch(true);
       setEffectsPosition(position);
       setShowEffects(true);
       
       // Add to matched items so shadow gets replaced
-      setMatchedItems(prev => new Set(Array.from(prev).concat(targetId)));
+      setMatchedItems(prev => {
+        const newSet = new Set(prev);
+        newSet.add(targetId);
+        console.log('🔄 Updated matched items:', Array.from(newSet));
+        return newSet;
+      });
       
       // Play success sound
       console.log('🔊 Playing success sound for correct match');
@@ -105,25 +168,19 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
         }
       }, 800); // Delay to let success sound play first
       
-      // Wait for effects, then check if all items are matched
+      // Wait for effects, then move to next level
       setTimeout(() => {
         setShowEffects(false);
-        
-        // Check if all animals in topic are matched
-        if (matchedItems.size + 1 >= topicItems.length) {
-          // All matched, proceed to celebration
-          nextLevel();
-        } else {
-          // Continue with next animal
-          nextLevel();
-        }
+        nextLevel(); // Always go to next level after correct match
       }, 2000);
       
     } else if (draggedItem === targetId && matchedItems.has(targetId)) {
-      // Already matched - no effect, just reset
+      // Already matched - just reset without effects
+      console.log('⚠️ Item already matched:', targetId);
       resetLevel();
     } else {
-      // Wrong match
+      // Wrong item on correct shadow - treat as wrong match
+      console.log('❌ Wrong item on shadow:', { draggedItem, targetId });
       setIsCorrectMatch(false);
       setEffectsPosition(position);
       setShowEffects(true);
@@ -140,7 +197,7 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col relative bg-gradient-to-b from-green-200 via-blue-100 to-yellow-100">
+    <div className="game-board-container w-full h-full flex flex-col relative bg-gradient-to-b from-green-200 via-blue-100 to-yellow-100">
       {/* Farm/nature themed background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Clouds */}
@@ -163,23 +220,42 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
         <div className="absolute bottom-32 right-10 w-8 h-8 bg-green-500 rounded-full opacity-60"></div>
       </div>
       
-      {/* Shadow targets area */}
-      <div className="flex-1 flex items-center justify-center p-2 sm:p-4 relative z-10">
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-3 md:gap-4 max-w-6xl w-full justify-items-center">
-          {shadowTargets.map((target, index) => (
-            <ShadowTarget
+      {/* Shadow targets area - random positioned shadows */}
+      <div className="flex-1 relative px-2 py-4 sm:px-4 sm:py-6 z-10 min-h-0 overflow-hidden">
+        {shadowTargets.map((target, index) => {
+          // Ensure we have a position for this shadow, create one if missing
+          let position = shadowPositions[index];
+          if (!position) {
+            // Fallback position if not generated properly
+            position = {
+              x: 20 + (index % 4) * 20, // Simple fallback grid
+              y: 20 + Math.floor(index / 4) * 25
+            };
+          }
+          
+          return (
+            <div
               key={`${target.id}-${index}`}
-              item={target}
-              onDrop={handleDrop}
-              isDragOver={draggedItem === target.id}
-              isMatched={matchedItems.has(target.id)}
-            />
-          ))}
-        </div>
+              className="absolute"
+              style={{
+                left: `${position.x}%`,
+                top: `${position.y}%`,
+                transform: 'translate(-50%, -50%)'
+              }}
+            >
+              <ShadowTarget
+                item={target}
+                onDrop={handleDrop}
+                isDragOver={draggedItem === target.id}
+                isMatched={matchedItems.has(target.id)}
+              />
+            </div>
+          );
+        })}
       </div>
 
-      {/* Draggable image area */}
-      <div className="h-32 sm:h-40 md:h-48 flex items-center justify-center p-4 sm:p-6 md:p-8 relative z-10">
+      {/* Draggable image area - positioned at bottom left corner */}
+      <div className="absolute bottom-4 left-4 z-20">
         <DraggableImage
           item={currentItem}
           onDragStart={handleDragStart}
