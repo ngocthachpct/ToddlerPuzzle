@@ -11,7 +11,8 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const dragRef = useRef<HTMLDivElement>(null);
-  const startPosRef = useRef({ x: 0, y: 0 });
+  const startTouchRef = useRef({ x: 0, y: 0 });
+  const offsetRef = useRef({ x: 0, y: 0 });
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length !== 1) return;
@@ -20,25 +21,40 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     const rect = dragRef.current?.getBoundingClientRect();
     if (!rect) return;
 
-    startPosRef.current = {
+    // Calculate offset from touch point to element top-left
+    offsetRef.current = {
       x: touch.clientX - rect.left,
       y: touch.clientY - rect.top
     };
 
+    // Store initial touch position
+    startTouchRef.current = {
+      x: touch.clientX,
+      y: touch.clientY
+    };
+
     setIsDragging(true);
     onDragStart(item.id);
+    
+    // Prevent default touch behaviors
     e.preventDefault();
+    e.stopPropagation();
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || e.touches.length !== 1) return;
     
     const touch = e.touches[0];
-    const newX = touch.clientX - startPosRef.current.x;
-    const newY = touch.clientY - startPosRef.current.y;
     
-    setPosition({ x: newX, y: newY });
+    // Calculate new position based on touch movement
+    const deltaX = touch.clientX - startTouchRef.current.x;
+    const deltaY = touch.clientY - startTouchRef.current.y;
+    
+    setPosition({ x: deltaX, y: deltaY });
+    
+    // Prevent default behaviors
     e.preventDefault();
+    e.stopPropagation();
   };
 
   const calculateOverlapPercentage = (draggedRect: DOMRect, targetRect: DOMRect): number => {
@@ -64,9 +80,10 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!isDragging) return;
 
+    // Get current touch position
     const touch = e.changedTouches[0];
     
-    // Get the dragged item's current position and size
+    // Get the dragged element's current position
     const draggedElement = dragRef.current;
     if (!draggedElement) {
       setPosition({ x: 0, y: 0 });
@@ -75,9 +92,23 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
       return;
     }
     
-    const draggedRect = draggedElement.getBoundingClientRect();
+    // Calculate current element position with offset
+    const currentX = touch.clientX - offsetRef.current.x;
+    const currentY = touch.clientY - offsetRef.current.y;
+    const elementWidth = draggedElement.offsetWidth;
+    const elementHeight = draggedElement.offsetHeight;
     
-    // Find all shadow targets and check overlap percentage
+    // Create a DOMRect-like object for the current dragged position
+    const draggedRect = {
+      left: currentX,
+      top: currentY,
+      right: currentX + elementWidth,
+      bottom: currentY + elementHeight,
+      width: elementWidth,
+      height: elementHeight
+    } as DOMRect;
+    
+    // Find all shadow targets and check overlap
     const shadowTargets = document.querySelectorAll('[data-shadow-target="true"]');
     
     interface MatchResult {
@@ -93,7 +124,7 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
       const overlapPercentage = calculateOverlapPercentage(draggedRect, targetRect);
       const targetId = shadowTarget.getAttribute('data-target-id');
       
-      // Store the best match regardless of ID, but only process if ID matches
+      // Check for valid match (70% overlap + correct ID)
       if (overlapPercentage >= 70 && targetId && targetId === item.id) {
         const currentMatch: MatchResult = {
           targetId,
@@ -110,35 +141,38 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
       }
     });
     
-    // Trigger drop event if we found a valid match
-    if (bestMatch !== null) {
-      const matchResult = bestMatch as MatchResult;
+    // Dispatch appropriate event
+    if (bestMatch) {
+      // Correct match found
       const event = new CustomEvent('dragDrop', {
         detail: {
-          targetId: matchResult.targetId,
-          position: matchResult.position
+          targetId: bestMatch.targetId,
+          position: bestMatch.position
         }
       });
       window.dispatchEvent(event);
     } else {
-      // No valid match found - trigger wrong match effect
+      // No valid match - trigger wrong match effect
       const event = new CustomEvent('dragDrop', {
         detail: {
-          targetId: 'wrong-match', // Special indicator for wrong match
+          targetId: 'wrong-match',
           position: {
-            x: draggedRect.left + draggedRect.width / 2,
-            y: draggedRect.top + draggedRect.height / 2
+            x: currentX + elementWidth / 2,
+            y: currentY + elementHeight / 2
           }
         }
       });
       window.dispatchEvent(event);
     }
 
-    // Reset position
+    // Reset state
     setPosition({ x: 0, y: 0 });
     setIsDragging(false);
     onDragEnd();
+    
+    // Prevent default behaviors
     e.preventDefault();
+    e.stopPropagation();
   };
 
   // Handle desktop drag and drop
@@ -152,30 +186,53 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     onDragEnd();
   };
 
+  // Detect if device supports touch - improved detection
+  const isTouchDevice = React.useMemo(() => {
+    // Check for touch support
+    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Check if we're on a mobile/tablet device
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+    
+    // For iPads specifically, they might report mouse support too
+    const isIPad = /ipad/i.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    
+    return hasTouch || isMobile || isIPad;
+  }, []);
+
   return (
     <div
       ref={dragRef}
       className={`
-        relative cursor-move select-none transition-transform duration-200
-        ${isDragging ? 'scale-110 z-50' : 'hover:scale-105'}
+        draggable-item relative select-none
+        ${isDragging ? 'dragging scale-110 z-50' : 'hover:scale-105'}
       `}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
         position: isDragging ? 'fixed' : 'relative',
         zIndex: isDragging ? 1000 : 1,
+        touchAction: 'none',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        WebkitTouchCallout: 'none',
+        WebkitTapHighlightColor: 'transparent',
+        cursor: isTouchDevice ? 'default' : (isDragging ? 'grabbing' : 'grab'),
       }}
-      draggable
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEndDesktop}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      draggable={!isTouchDevice} // Enable HTML5 drag only for desktop
+      // Touch events for iPad/mobile
+      onTouchStart={isTouchDevice ? handleTouchStart : undefined}
+      onTouchMove={isTouchDevice ? handleTouchMove : undefined}
+      onTouchEnd={isTouchDevice ? handleTouchEnd : undefined}
+      // Desktop drag events
+      onDragStart={!isTouchDevice ? handleDragStart : undefined}
+      onDragEnd={!isTouchDevice ? handleDragEndDesktop : undefined}
     >
-      <div className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-2xl shadow-lg p-4 flex items-center justify-center">
+      <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 bg-white rounded-2xl shadow-lg p-3 md:p-4 flex items-center justify-center">
         <img
           src={item.image}
           alt={item.name}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-contain pointer-events-none"
           draggable={false}
         />
       </div>

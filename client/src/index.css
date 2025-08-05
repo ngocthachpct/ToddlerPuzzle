@@ -14,6 +14,35 @@
     overflow: hidden;
     width: 100vw;
     height: 100vh;
+    /* Optimizations for both desktop and touch devices */
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* Prevent zoom on double tap (iPad) */
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+  }
+
+  /* Responsive text sizing */
+  html {
+    font-size: 14px;
+  }
+
+  @media (min-width: 640px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 18px;
+    }
   }
 }
 
@@ -27,6 +56,46 @@ canvas {
   width: 100% !important;
   height: 100% !important;
   touch-action: none;
+}
+
+/* Draggable elements optimization */
+.draggable-item {
+  /* Better performance during dragging */
+  will-change: transform;
+  /* Smooth animations */
+  transition: transform 0.2s ease-out;
+}
+
+.draggable-item.dragging {
+  /* Remove transition during active dragging for better responsiveness */
+  transition: none;
+  /* Ensure proper layering */
+  z-index: 1000;
+}
+
+/* iPad and touch device optimizations */
+@media (pointer: coarse) {
+  /* Increase touch targets for better accessibility */
+  .shadow-target {
+    min-width: 80px;
+    min-height: 80px;
+  }
+  
+  .draggable-item {
+    min-width: 80px;
+    min-height: 80px;
+  }
+}
+
+/* Desktop optimizations */
+@media (pointer: fine) {
+  .draggable-item:hover {
+    cursor: grab;
+  }
+  
+  .draggable-item.dragging {
+    cursor: grabbing;
+  }
 }
 
 @keyframes float {

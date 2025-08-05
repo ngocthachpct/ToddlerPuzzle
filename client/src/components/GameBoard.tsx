@@ -164,8 +164,8 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
       </div>
       
       {/* Shadow targets area */}
-      <div className="flex-1 flex items-center justify-center p-4 relative z-10">
-        <div className="grid grid-cols-5 gap-4 max-w-5xl">
+      <div className="flex-1 flex items-center justify-center p-2 sm:p-4 relative z-10">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-3 md:gap-4 max-w-6xl w-full justify-items-center">
           {shadowTargets.map((target, index) => (
             <ShadowTarget
               key={`${target.id}-${index}`}
@@ -179,7 +179,7 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
       </div>
 
       {/* Draggable image area */}
-      <div className="h-48 flex items-center justify-center p-8 relative z-10">
+      <div className="h-32 sm:h-40 md:h-48 flex items-center justify-center p-4 sm:p-6 md:p-8 relative z-10">
         <DraggableImage
           item={currentItem}
           onDragStart={handleDragStart}

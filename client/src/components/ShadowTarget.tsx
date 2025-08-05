@@ -81,13 +81,15 @@ const ShadowTarget = ({ item, onDrop, isDragOver, isMatched }: ShadowTargetProps
   return (
     <div
       className={`
-        w-24 h-24 md:w-28 md:h-28 
+        shadow-target
+        w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32
         ${isMatched ? 'bg-white' : 'bg-white/50'} 
         rounded-2xl 
         ${isMatched ? 'border-4 border-solid border-green-400' : 'border-4 border-dashed'}
         flex items-center justify-center
         transition-all duration-200
         ${isHovered || isDragOver ? 'border-blue-400 bg-blue-100/50 scale-105' : isMatched ? 'border-green-400' : 'border-gray-300'}
+        touch-none select-none
       `}
       data-shadow-target="true"
       data-target-id={item.id}
