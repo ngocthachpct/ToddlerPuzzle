@@ -23,7 +23,7 @@ export default defineConfig({
   root: path.resolve(__dirname, "client"),
   base: "./", // Ensure relative paths work in production
   build: {
-    outDir: path.resolve(__dirname, "dist"),
+    outDir: "../dist", // Build to root dist folder for Vercel
     emptyOutDir: true,
     rollupOptions: {
       input: path.resolve(__dirname, "client/index.html")
