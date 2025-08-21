@@ -17,6 +17,7 @@ interface AudioState {
   playHit: () => void;
   playSuccess: () => void;
   speakText: (text: string, delay?: number) => void;
+  testSpeech: () => void;
   initializeAudio: () => Promise<void>;
 }
 
@@ -94,6 +95,21 @@ export const useAudio = create<AudioState>((set, get) => ({
       });
       
       console.log("🔊 Audio initialized successfully for iOS/iPad");
+      
+      // Initialize speech synthesis for iOS/Safari
+      if ('speechSynthesis' in window) {
+        // Force load voices by calling getVoices
+        const voices = speechSynthesis.getVoices();
+        console.log("🗣️ Speech synthesis available, voices loaded:", voices.length);
+        
+        // If no voices loaded yet, wait for them
+        if (voices.length === 0) {
+          speechSynthesis.addEventListener('voiceschanged', () => {
+            const newVoices = speechSynthesis.getVoices();
+            console.log("🗣️ Voices loaded after change:", newVoices.length);
+          }, { once: true });
+        }
+      }
     } catch (error) {
       console.log("Audio initialization failed:", error);
       set({ isAudioInitialized: true }); // Mark as initialized even if failed
@@ -173,33 +189,106 @@ export const useAudio = create<AudioState>((set, get) => ({
 
   speakText: (text: string, delay: number = 0) => {
     const { isMuted } = get();
-    if (isMuted || !('speechSynthesis' in window)) return;
+    if (isMuted) {
+      console.log("🗣️ Speech skipped (muted)");
+      return;
+    }
+    
+    if (!('speechSynthesis' in window)) {
+      console.log("🗣️ Speech synthesis not supported on this device");
+      return;
+    }
     
     setTimeout(() => {
       try {
         // Stop any previous speech
         speechSynthesis.cancel();
         
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.8; // Slightly slower for toddlers
-        utterance.volume = 0.9;
-        utterance.pitch = 1.2; // Slightly higher pitch for children
-        
-        // Better error handling for speech synthesis
-        utterance.onerror = (event) => {
-          console.log("Speech synthesis error:", event);
+        // Wait for voices to load on iOS/Safari
+        const speakWithVoice = () => {
+          const voices = speechSynthesis.getVoices();
+          console.log("🗣️ Available voices:", voices.length);
+          
+          const utterance = new SpeechSynthesisUtterance(text);
+          
+          // Try to find an English voice, prefer US English
+          const englishVoices = voices.filter(voice => 
+            voice.lang.startsWith('en-') || voice.lang === 'en'
+          );
+          
+          let selectedVoice = null;
+          if (englishVoices.length > 0) {
+            // Prefer US English, then UK English, then any English
+            selectedVoice = 
+              englishVoices.find(v => v.lang === 'en-US') ||
+              englishVoices.find(v => v.lang === 'en-GB') ||
+              englishVoices[0];
+          }
+          
+          if (selectedVoice) {
+            utterance.voice = selectedVoice;
+            utterance.lang = selectedVoice.lang;
+            console.log("🗣️ Using voice:", selectedVoice.name, selectedVoice.lang);
+          } else {
+            utterance.lang = 'en-US';
+            console.log("🗣️ Using default en-US voice");
+          }
+          
+          utterance.rate = 0.7; // Slower for toddlers
+          utterance.volume = 1.0; // Full volume
+          utterance.pitch = 1.1; // Slightly higher pitch for children
+          
+          // Enhanced error handling for speech synthesis
+          utterance.onerror = (event) => {
+            console.log("🗣️ Speech synthesis error:", event.error, event);
+          };
+          
+          utterance.onstart = () => {
+            console.log("🗣️ Speech started:", text);
+          };
+          
+          utterance.onend = () => {
+            console.log("🗣️ Speech completed:", text);
+          };
+          
+          console.log("🗣️ Attempting to speak:", text);
+          speechSynthesis.speak(utterance);
+          
+          // Fallback for iOS - sometimes needs a resume
+          setTimeout(() => {
+            if (speechSynthesis.paused) {
+              console.log("🗣️ Resuming speech synthesis");
+              speechSynthesis.resume();
+            }
+          }, 100);
         };
         
-        utterance.onend = () => {
-          console.log("🗣️ Speech completed:", text);
-        };
+        // Check if voices are already loaded
+        if (speechSynthesis.getVoices().length > 0) {
+          speakWithVoice();
+        } else {
+          // Wait for voices to load (important for iOS/Safari)
+          console.log("🗣️ Waiting for voices to load...");
+          speechSynthesis.addEventListener('voiceschanged', speakWithVoice, { once: true });
+          
+          // Fallback timeout in case voiceschanged doesn't fire
+          setTimeout(() => {
+            if (speechSynthesis.getVoices().length === 0) {
+              console.log("🗣️ Voices still not loaded, trying anyway...");
+            }
+            speakWithVoice();
+          }, 1000);
+        }
         
-        console.log("🗣️ Speaking:", text);
-        speechSynthesis.speak(utterance);
       } catch (error) {
-        console.log("Speech synthesis failed:", error);
+        console.log("🗣️ Speech synthesis failed:", error);
       }
     }, delay);
+  },
+
+  testSpeech: () => {
+    const { speakText } = get();
+    console.log("🗣️ Testing speech synthesis...");
+    speakText("Hello! Speech is working.", 0);
   }
 }));

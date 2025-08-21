@@ -34,7 +34,7 @@ const HomePage = ({ onStartGame }: HomePageProps) => {
         {/* Sound Setting */}
         <div className="absolute top-6 right-6">
           <div className="bg-white/90 rounded-2xl p-4 shadow-lg">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 mb-3">
               <span className="text-lg font-medium text-gray-700">Sound:</span>
               <button
                 onClick={toggleMute}
@@ -66,6 +66,22 @@ const HomePage = ({ onStartGame }: HomePageProps) => {
                 )}
               </button>
             </div>
+            
+            {/* Test Speech Button */}
+            {!isMuted && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600">Voice:</span>
+                <button
+                  onClick={() => {
+                    const { testSpeech } = useAudio.getState();
+                    testSpeech();
+                  }}
+                  className="px-3 py-1 bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-full text-sm font-medium transition-all"
+                >
+                  Test Voice
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
