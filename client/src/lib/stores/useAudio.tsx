@@ -16,6 +16,7 @@ interface AudioState {
   toggleMute: () => void;
   playHit: () => void;
   playSuccess: () => void;
+  speakText: (text: string, delay?: number) => void;
   initializeAudio: () => Promise<void>;
 }
 
@@ -42,33 +43,49 @@ export const useAudio = create<AudioState>((set, get) => ({
       // iOS Safari optimization
       successAudio.preload = "auto";
       hitAudio.preload = "auto";
-      successAudio.volume = 0.7;
-      hitAudio.volume = 0.3;
+      successAudio.volume = 0.8;
+      hitAudio.volume = 0.5;
       
-      // For iOS - create a silent play to initialize audio context
-      const initPromises = [];
+      // Critical for iOS - enable cross-origin and set proper attributes
+      successAudio.crossOrigin = "anonymous";
+      hitAudio.crossOrigin = "anonymous";
+      successAudio.setAttribute('playsinline', 'true');
+      hitAudio.setAttribute('playsinline', 'true');
       
-      // Play a very short silent sound to enable audio on iOS
-      successAudio.muted = true;
-      hitAudio.muted = true;
+      // For iOS - force audio context creation with user gesture
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioContext) {
+        const audioContext = new AudioContext();
+        if (audioContext.state === 'suspended') {
+          await audioContext.resume();
+        }
+      }
       
-      initPromises.push(
-        successAudio.play().then(() => {
-          successAudio.pause();
-          successAudio.currentTime = 0;
-          successAudio.muted = false;
-        }).catch(() => {})
-      );
+      // Force load and enable audio on iOS with multiple attempts
+      const enableAudio = async (audio: HTMLAudioElement) => {
+        return new Promise((resolve) => {
+          // Try to play immediately
+          audio.muted = true;
+          audio.currentTime = 0;
+          audio.play()
+            .then(() => {
+              audio.pause();
+              audio.currentTime = 0;
+              audio.muted = false;
+              resolve(true);
+            })
+            .catch(() => {
+              // Fallback - just unmute and resolve
+              audio.muted = false;
+              resolve(true);
+            });
+        });
+      };
       
-      initPromises.push(
-        hitAudio.play().then(() => {
-          hitAudio.pause();
-          hitAudio.currentTime = 0;
-          hitAudio.muted = false;
-        }).catch(() => {})
-      );
-      
-      await Promise.all(initPromises);
+      await Promise.all([
+        enableAudio(successAudio),
+        enableAudio(hitAudio)
+      ]);
       
       set({ 
         successSound: successAudio, 
@@ -76,7 +93,7 @@ export const useAudio = create<AudioState>((set, get) => ({
         isAudioInitialized: true 
       });
       
-      console.log("Audio initialized successfully for iOS/iPad");
+      console.log("🔊 Audio initialized successfully for iOS/iPad");
     } catch (error) {
       console.log("Audio initialization failed:", error);
       set({ isAudioInitialized: true }); // Mark as initialized even if failed
@@ -99,17 +116,25 @@ export const useAudio = create<AudioState>((set, get) => ({
     if (!isAudioInitialized || !hitSound || isMuted) return;
     
     try {
-      // Clone the sound to allow overlapping playback
-      const soundClone = hitSound.cloneNode() as HTMLAudioElement;
-      soundClone.volume = 0.3;
-      soundClone.currentTime = 0;
+      // Stop any previous instances
+      hitSound.pause();
+      hitSound.currentTime = 0;
       
-      // Play with iOS-friendly approach
-      const playPromise = soundClone.play();
+      // For iOS - ensure volume and play
+      hitSound.volume = 0.5;
+      
+      // Play with iOS-friendly approach and better error handling
+      const playPromise = hitSound.play();
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log("Hit sound play prevented:", error);
-        });
+        playPromise
+          .then(() => console.log("🔊 Hit sound played successfully"))
+          .catch(error => {
+            console.log("Hit sound play prevented:", error);
+            // Retry once for iOS
+            setTimeout(() => {
+              hitSound.play().catch(() => {});
+            }, 100);
+          });
       }
     } catch (error) {
       console.log("Hit sound error:", error);
@@ -121,20 +146,60 @@ export const useAudio = create<AudioState>((set, get) => ({
     if (!isAudioInitialized || !successSound || isMuted) return;
     
     try {
-      // Clone the sound to allow overlapping playback
-      const soundClone = successSound.cloneNode() as HTMLAudioElement;
-      soundClone.volume = 0.7; // Louder volume for success
-      soundClone.currentTime = 0;
+      // Stop any previous instances
+      successSound.pause();
+      successSound.currentTime = 0;
       
-      // Play with iOS-friendly approach
-      const playPromise = soundClone.play();
+      // For iOS - ensure volume and play
+      successSound.volume = 0.8;
+      
+      // Play with iOS-friendly approach and better error handling
+      const playPromise = successSound.play();
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log("Success sound play prevented:", error);
-        });
+        playPromise
+          .then(() => console.log("🔊 Success sound played successfully"))
+          .catch(error => {
+            console.log("Success sound play prevented:", error);
+            // Retry once for iOS
+            setTimeout(() => {
+              successSound.play().catch(() => {});
+            }, 100);
+          });
       }
     } catch (error) {
       console.log("Success sound error:", error);
     }
+  },
+
+  speakText: (text: string, delay: number = 0) => {
+    const { isMuted } = get();
+    if (isMuted || !('speechSynthesis' in window)) return;
+    
+    setTimeout(() => {
+      try {
+        // Stop any previous speech
+        speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8; // Slightly slower for toddlers
+        utterance.volume = 0.9;
+        utterance.pitch = 1.2; // Slightly higher pitch for children
+        
+        // Better error handling for speech synthesis
+        utterance.onerror = (event) => {
+          console.log("Speech synthesis error:", event);
+        };
+        
+        utterance.onend = () => {
+          console.log("🗣️ Speech completed:", text);
+        };
+        
+        console.log("🗣️ Speaking:", text);
+        speechSynthesis.speak(utterance);
+      } catch (error) {
+        console.log("Speech synthesis failed:", error);
+      }
+    }, delay);
   }
 }));

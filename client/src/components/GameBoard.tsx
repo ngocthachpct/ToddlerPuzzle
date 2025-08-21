@@ -10,9 +10,17 @@ interface GameBoardProps {
   selectedTopic?: string;
 }
 
-const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
-  const { currentLevel, nextLevel, resetLevel } = useGameState();
-  const { playSuccess, playHit, isMuted } = useAudio();
+const GameBoard: React.FC<GameBoardProps> = ({ 
+  selectedTopic = 'domestic-animals'
+}) => {
+  const { 
+    currentLevel, 
+    nextLevel, 
+    resetLevel, 
+    isGameComplete 
+  } = useGameState();
+  
+  const { playHit, playSuccess, speakText } = useAudio();
   
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [showEffects, setShowEffects] = useState(false);
@@ -114,6 +122,13 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
   const currentItemIndex = randomOrder[currentLevel % topicItems.length] ?? 0;
   const currentItem = topicItems[currentItemIndex];
   
+  // Speak the item name when level changes (after a brief delay)
+  useEffect(() => {
+    if (currentItem?.name) {
+      speakText(`Find the ${currentItem.name}`, 1500); // Delay to let transition complete
+    }
+  }, [currentLevel, currentItem?.name, speakText]);
+  
   // Randomize shadow positions on the grid
   const [shadowOrder, setShadowOrder] = useState<GameItem[]>([]);
   
@@ -166,24 +181,8 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
       console.log('🔊 Playing success sound for correct match');
       playSuccess();
       
-      // Play voice prompt using Web Speech API (only if sound is not muted)
-      setTimeout(() => {
-        if (!isMuted && 'speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance(currentItem.name);
-          utterance.lang = 'en-US';
-          utterance.rate = 0.8; // Slightly slower for toddlers
-          utterance.volume = 0.8;
-          utterance.pitch = 1.2; // Slightly higher pitch for children
-          
-          // Stop any previous speech and speak the new word
-          speechSynthesis.cancel();
-          speechSynthesis.speak(utterance);
-        } else if (isMuted) {
-          console.log("Voice narration skipped (muted)");
-        } else {
-          console.log("Speech synthesis not supported");
-        }
-      }, 800); // Delay to let success sound play first
+      // Play voice prompt using the new speakText function
+      speakText(currentItem.name, 800); // Delay to let success sound play first
       
       // Wait for effects, then move to next level
       setTimeout(() => {

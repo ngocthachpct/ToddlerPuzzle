@@ -17,23 +17,30 @@ function App() {
   // Initialize audio on first user interaction
   useEffect(() => {
     const handleFirstInteraction = async () => {
+      console.log("🔊 User interaction detected - initializing audio...");
       await initializeAudio();
       
       // Remove listeners after first interaction
       document.removeEventListener('touchstart', handleFirstInteraction);
       document.removeEventListener('click', handleFirstInteraction);
       document.removeEventListener('keydown', handleFirstInteraction);
+      document.removeEventListener('touchend', handleFirstInteraction);
+      document.removeEventListener('pointerdown', handleFirstInteraction);
     };
 
-    // Add listeners for first user interaction (required for iOS)
-    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    // Add multiple listeners for first user interaction (required for iOS)
+    document.addEventListener('touchstart', handleFirstInteraction, { once: true, passive: true });
     document.addEventListener('click', handleFirstInteraction, { once: true });
     document.addEventListener('keydown', handleFirstInteraction, { once: true });
+    document.addEventListener('touchend', handleFirstInteraction, { once: true, passive: true });
+    document.addEventListener('pointerdown', handleFirstInteraction, { once: true });
 
     return () => {
       document.removeEventListener('touchstart', handleFirstInteraction);
       document.removeEventListener('click', handleFirstInteraction);
       document.removeEventListener('keydown', handleFirstInteraction);
+      document.removeEventListener('touchend', handleFirstInteraction);
+      document.removeEventListener('pointerdown', handleFirstInteraction);
     };
   }, [initializeAudio]);
 
