@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="gradY" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8d6e63;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6d4c41;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="100" y="130" font-family="Arial Black, sans-serif" font-size="120" font-weight="bold" text-anchor="middle" fill="url(#gradY)" stroke="#3e2723" stroke-width="3">Y</text>
+</svg>

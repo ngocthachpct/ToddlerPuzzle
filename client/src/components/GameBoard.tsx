@@ -59,29 +59,46 @@ const GameBoard = ({ selectedTopic = "domestic-animals" }: GameBoardProps) => {
 
   const generateRandomPositions = () => {
     const positions: Array<{x: number, y: number}> = [];
-    const shadowCount = topicItems.length; // Show ALL shadows, not limited
+    const shadowCount = topicItems.length;
     
-    // Use a more reliable grid-based approach
+    // Enhanced grid-based approach with guaranteed no overlap
     const gridCols = Math.ceil(Math.sqrt(shadowCount));
     const gridRows = Math.ceil(shadowCount / gridCols);
-    const cellWidth = 70 / gridCols; // Use more screen width
-    const cellHeight = 55 / gridRows; // Use more screen height
+    
+    // Calculate available space accounting for shadow size
+    const shadowWidth = 12; // Approximate width percentage of each shadow
+    const shadowHeight = 12; // Approximate height percentage of each shadow
+    const margin = 2; // Minimum margin between shadows
+    
+    const availableWidth = 80; // Use 80% of screen width
+    const availableHeight = 60; // Use 60% of screen height
+    
+    const cellWidth = availableWidth / gridCols;
+    const cellHeight = availableHeight / gridRows;
+    
+    // Ensure minimum cell size to prevent overlap
+    const minCellWidth = shadowWidth + margin;
+    const minCellHeight = shadowHeight + margin;
+    
+    const actualCellWidth = Math.max(cellWidth, minCellWidth);
+    const actualCellHeight = Math.max(cellHeight, minCellHeight);
     
     for (let i = 0; i < shadowCount; i++) {
       const gridX = i % gridCols;
       const gridY = Math.floor(i / gridCols);
       
-      // Calculate base position in grid cell
-      const baseX = 10 + gridX * cellWidth + cellWidth / 2;
-      const baseY = 10 + gridY * cellHeight + cellHeight / 2;
+      // Center position in each cell with guaranteed spacing
+      const baseX = 10 + gridX * actualCellWidth + actualCellWidth / 2;
+      const baseY = 10 + gridY * actualCellHeight + actualCellHeight / 2;
       
-      // Add small random offset within cell bounds
-      const randomX = baseX + (Math.random() - 0.5) * (cellWidth * 0.3);
-      const randomY = baseY + (Math.random() - 0.5) * (cellHeight * 0.3);
+      // Add very small random offset (within safe bounds)
+      const maxOffset = Math.min(actualCellWidth * 0.1, actualCellHeight * 0.1);
+      const randomX = baseX + (Math.random() - 0.5) * maxOffset;
+      const randomY = baseY + (Math.random() - 0.5) * maxOffset;
       
       const position = {
-        x: Math.max(8, Math.min(85, randomX)), // Clamp to safe bounds
-        y: Math.max(8, Math.min(65, randomY))
+        x: Math.max(8, Math.min(92 - shadowWidth, randomX)), // Ensure within bounds
+        y: Math.max(8, Math.min(72 - shadowHeight, randomY))
       };
       
       positions.push(position);

@@ -213,24 +213,6 @@ export const gameTopics: GameTopic[] = [
     ]
   },
   {
-    id: "colors",
-    name: "Colors",
-    emoji: "🌈",
-    description: "Beautiful colors",
-    items: [
-      createGameItem("red", "Red", "colors"),
-      createGameItem("blue", "Blue", "colors"),
-      createGameItem("yellow", "Yellow", "colors"),
-      createGameItem("green", "Green", "colors"),
-      createGameItem("orange", "Orange", "colors"),
-      createGameItem("purple", "Purple", "colors"),
-      createGameItem("pink", "Pink", "colors"),
-      createGameItem("brown", "Brown", "colors"),
-      createGameItem("black", "Black", "colors"),
-      createGameItem("white", "White", "colors")
-    ]
-  },
-  {
     id: "plants",
     name: "Plants & Flowers",
     emoji: "🪴",
@@ -300,6 +282,101 @@ export const gameTopics: GameTopic[] = [
       createGameItem("excited", "Excited", "expressions"),
       createGameItem("crying", "Crying", "expressions"),
       createGameItem("laughing", "Laughing", "expressions")
+    ]
+  },
+  {
+    id: "numbers",
+    name: "Numbers",
+    emoji: "🔢",
+    description: "Learn numbers 1 to 10",
+    items: [
+      createGameItem("1", "One", "numbers", "svg"),
+      createGameItem("2", "Two", "numbers", "svg"),
+      createGameItem("3", "Three", "numbers", "svg"),
+      createGameItem("4", "Four", "numbers", "svg"),
+      createGameItem("5", "Five", "numbers", "svg"),
+      createGameItem("6", "Six", "numbers", "svg"),
+      createGameItem("7", "Seven", "numbers", "svg"),
+      createGameItem("8", "Eight", "numbers", "svg"),
+      createGameItem("9", "Nine", "numbers", "svg"),
+      createGameItem("10", "Ten", "numbers", "svg")
+    ]
+  },
+  {
+    id: "colors",
+    name: "Colors",
+    emoji: "🎨",
+    description: "Learn basic colors",
+    items: [
+      createGameItem("red", "Red", "colors", "svg"),
+      createGameItem("blue", "Blue", "colors", "svg"),
+      createGameItem("green", "Green", "colors", "svg"),
+      createGameItem("yellow", "Yellow", "colors", "svg"),
+      createGameItem("orange", "Orange", "colors", "svg"),
+      createGameItem("purple", "Purple", "colors", "svg"),
+      createGameItem("pink", "Pink", "colors", "svg"),
+      createGameItem("brown", "Brown", "colors", "svg"),
+      createGameItem("black", "Black", "colors", "svg"),
+      createGameItem("white", "White", "colors", "svg")
+    ]
+  },
+  {
+    id: "letters-a-m",
+    name: "Letters A-M",
+    emoji: "🔤",
+    description: "Learn letters A to M",
+    items: [
+      createGameItem("a", "A", "letters-a-m", "svg"),
+      createGameItem("b", "B", "letters-a-m", "svg"),
+      createGameItem("c", "C", "letters-a-m", "svg"),
+      createGameItem("d", "D", "letters-a-m", "svg"),
+      createGameItem("e", "E", "letters-a-m", "svg"),
+      createGameItem("f", "F", "letters-a-m", "svg"),
+      createGameItem("g", "G", "letters-a-m", "svg"),
+      createGameItem("h", "H", "letters-a-m", "svg"),
+      createGameItem("i", "I", "letters-a-m", "svg"),
+      createGameItem("j", "J", "letters-a-m", "svg"),
+      createGameItem("k", "K", "letters-a-m", "svg"),
+      createGameItem("l", "L", "letters-a-m", "svg"),
+      createGameItem("m", "M", "letters-a-m", "svg")
+    ]
+  },
+  {
+    id: "letters-n-z",
+    name: "Letters N-Z",
+    emoji: "📝",
+    description: "Learn letters N to Z",
+    items: [
+      createGameItem("n", "N", "letters-n-z", "svg"),
+      createGameItem("o", "O", "letters-n-z", "svg"),
+      createGameItem("p", "P", "letters-n-z", "svg"),
+      createGameItem("q", "Q", "letters-n-z", "svg"),
+      createGameItem("r", "R", "letters-n-z", "svg"),
+      createGameItem("s", "S", "letters-n-z", "svg"),
+      createGameItem("t", "T", "letters-n-z", "svg"),
+      createGameItem("u", "U", "letters-n-z", "svg"),
+      createGameItem("v", "V", "letters-n-z", "svg"),
+      createGameItem("w", "W", "letters-n-z", "svg"),
+      createGameItem("x", "X", "letters-n-z", "svg"),
+      createGameItem("y", "Y", "letters-n-z", "svg"),
+      createGameItem("z", "Z", "letters-n-z", "svg")
+    ]
+  },
+  {
+    id: "math-addition",
+    name: "Math Addition 1+",
+    emoji: "➕",
+    description: "Learn simple addition with 1",
+    items: [
+      createGameItem("2", "Two", "math-addition", "svg"),
+      createGameItem("3", "Three", "math-addition", "svg"),
+      createGameItem("4", "Four", "math-addition", "svg"),
+      createGameItem("5", "Five", "math-addition", "svg"),
+      createGameItem("6", "Six", "math-addition", "svg"),
+      createGameItem("7", "Seven", "math-addition", "svg"),
+      createGameItem("8", "Eight", "math-addition", "svg"),
+      createGameItem("9", "Nine", "math-addition", "svg"),
+      createGameItem("10", "Ten", "math-addition", "svg")
     ]
   }
 ];

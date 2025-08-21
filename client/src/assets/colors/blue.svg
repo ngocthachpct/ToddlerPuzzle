@@ -1,8 +1,10 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Blue color swatch -->
-  <rect x="10" y="10" width="80" height="80" fill="#0000FF" stroke="#000080" stroke-width="3" rx="10"/>
-  <!-- Shine effect -->
-  <ellipse cx="35" cy="35" rx="15" ry="20" fill="#6666FF" opacity="0.6"/>
-  <!-- Text -->
-  <text x="50" y="55" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="#FFFFFF">BLUE</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="80" fill="#3B82F6" stroke="#2563EB" stroke-width="4"/>
+  <circle cx="100" cy="100" r="80" fill="url(#blueGradient)" opacity="0.8"/>
+  <defs>
+    <radialGradient id="blueGradient" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#93C5FD"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </radialGradient>
+  </defs>
 </svg>

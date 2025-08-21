@@ -1,8 +1,10 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Red color swatch -->
-  <rect x="10" y="10" width="80" height="80" fill="#FF0000" stroke="#CC0000" stroke-width="3" rx="10"/>
-  <!-- Shine effect -->
-  <ellipse cx="35" cy="35" rx="15" ry="20" fill="#FF6666" opacity="0.6"/>
-  <!-- Text -->
-  <text x="50" y="55" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="#FFFFFF">RED</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="80" fill="#EF4444" stroke="#DC2626" stroke-width="4"/>
+  <circle cx="100" cy="100" r="80" fill="url(#redGradient)" opacity="0.8"/>
+  <defs>
+    <radialGradient id="redGradient" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#FCA5A5"/>
+      <stop offset="100%" stop-color="#DC2626"/>
+    </radialGradient>
+  </defs>
 </svg>

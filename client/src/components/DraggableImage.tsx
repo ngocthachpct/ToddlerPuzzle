@@ -125,7 +125,7 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
     shadowTargets.forEach((shadowTarget, index) => {
       const targetRect = shadowTarget.getBoundingClientRect();
       const overlapPercentage = calculateOverlapPercentage(draggedRect, targetRect);
-      const targetId = shadowTarget.getAttribute('data-target-id');
+      const targetId = shadowTarget.getAttribute('data-target-id') || '';
       
       console.log(`🎯 Shadow ${index} (${targetId}):`, {
         overlap: overlapPercentage.toFixed(1) + '%',
@@ -156,8 +156,8 @@ const DraggableImage = ({ item, onDragStart, onDragEnd }: DraggableImageProps) =
       console.log('✅ Best match found:', bestMatch);
       const event = new CustomEvent('dragDrop', {
         detail: {
-          targetId: bestMatch.targetId,
-          position: bestMatch.position
+          targetId: (bestMatch as MatchResult).targetId,
+          position: (bestMatch as MatchResult).position
         }
       });
       window.dispatchEvent(event);
